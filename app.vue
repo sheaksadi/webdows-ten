@@ -1,4 +1,7 @@
 <script setup>
+import TaskBar from "./components/taskBar";
+import Window from "./components/window";
+
 let mousePos = reactive({
   top: 110,
   left: 110,
@@ -6,7 +9,7 @@ let mousePos = reactive({
   draggable: ""
 })
 
-const draggable = ref(null)
+
 const screen = ref(null)
 
 
@@ -49,14 +52,25 @@ function mouseMoveHandler(element) {
 </script>
 
 <template>
-  <div class="h-screen bg-slate-800 " ref="screen">
-    <div class="w-96 h-48 bg-cyan-500 absolute " >
-      <div class="w-full h-12 bg-purple-400 header"></div>
+  
+  <div class="h-screen w-full bg-transparent flex flex-col items-end" ref="screen">
+
+
+    <div class=" h-full w-full">
+      <Window icon="uil:github" title="Github">
+        bhgas
+      </Window>
     </div>
+  <TaskBar></TaskBar>
   </div>
 </template>
 <style>
 body {
   overflow: hidden; /* Hide scrollbars */
+  background-image: url("/assets/w-10-bg.jpg") ;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
 }
 </style>
