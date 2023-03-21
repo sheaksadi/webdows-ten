@@ -1,6 +1,7 @@
 <script setup>
 import TaskBar from "./components/taskBar";
 import Window from "./components/window";
+import WinBtn from "./components/winBtn";
 
 let mousePos = reactive({
   top: 110,
@@ -65,12 +66,17 @@ function mouseMoveHandler(element) {
   </div>
 </template>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+
 body {
   overflow: hidden; /* Hide scrollbars */
   background-image: url("/assets/w-10-bg.jpg") ;
   background-repeat: no-repeat;
   background-size: cover;
 
+  font-family: 'Kanit', sans-serif;
+
 
 }
+
 </style>

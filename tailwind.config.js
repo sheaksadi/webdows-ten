@@ -9,7 +9,12 @@ module.exports = {
     "./app.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      transitionTimingFunction: {
+        'delay-side': 'cubic-bezier(1,-0.05,.82,.39)',
+        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+      }
+    },
   },
   plugins: [],
 }
