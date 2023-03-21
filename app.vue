@@ -2,6 +2,9 @@
 import TaskBar from "./components/taskBar";
 import Window from "./components/window";
 import WinBtn from "./components/winBtn";
+import {webStore} from "./stores/webStore.js";
+const store = webStore()
+
 
 let mousePos = reactive({
   top: 110,
@@ -11,10 +14,13 @@ let mousePos = reactive({
 })
 
 
+
 const screen = ref(null)
 
 
 onMounted(() => {
+
+  store.screen = screen
   for (let element of window.document.getElementsByClassName("header")){
     mouseMoveHandler(element)
   }

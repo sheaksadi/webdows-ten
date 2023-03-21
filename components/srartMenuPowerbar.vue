@@ -1,6 +1,6 @@
 <template>
   <div class="h-full w-12  flex flex-col group justify-between delay-300 transition-all duration-100 ease-linear
-   overflow-hidden hover:shadow-xl drop-shadow-xl hover:bg-gray-700 "
+   overflow-hidden hover:shadow-xl drop-shadow-xl hover:bg-gray-700 absolute"
        :class="hoverClass"
   @mouseover="()=>{ isMouseOver = true}" @mouseout="()=>{isMouseOver = false}"
   >

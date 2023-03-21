@@ -13,19 +13,25 @@ onMounted(() => {
     time.value = moment().format("LT")
   },1000)
 })
-
+function outClicked(){
+  if (showStartMenu.value){
+    showStartMenu.value = false
+  }
+}
 </script>
 
 <template>
 <div class="w-full h-10 bg-gray-900 bg-opacity-90 z-10 flex justify-between items-center backdrop-blur-2xl" style="vertical-align: bottom">
   <div class="absolute bottom-10 left-0 ">
-    <StartMenu :open="showStartMenu"></StartMenu>
+    <StartMenu :open="showStartMenu" @outClick="outClicked"></StartMenu>
   </div>
   <div>
 <!--    <button class="w-10 h-10 hover:bg-slate-800 group flex items-center justify-center">-->
 <!--      <Icon name="teenyicons:windows-solid" class="text-white group-hover:text-cyan-300  w-5 h-5 " ></Icon>-->
 <!--    </button>-->
-    <WinBtn icon-size="5" size="10" btn-cls="hover:bg-slate-800 group" icon-cls="group-hover:text-cyan-300"
+
+
+    <WinBtn  icon-size="5" size="10" btn-cls="hover:bg-slate-800 group start-menu-not-close" icon-cls="group-hover:text-cyan-300 start-menu-not-close"
             icon-name="teenyicons:windows-solid"
             @click="()=>{showStartMenu = !showStartMenu}"
     ></WinBtn>

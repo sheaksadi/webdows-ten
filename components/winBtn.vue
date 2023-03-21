@@ -1,6 +1,6 @@
 <template>
-  <button :class="btnStyle">
-    <Icon :name="iconName" :class="iconStyle" ></Icon>
+  <button :class="btnStyle" :id="btnId">
+    <Icon :name="iconName" :class="iconStyle" :id="iconId"></Icon>
     <slot></slot>
   </button>
 </template>
@@ -21,13 +21,18 @@ const props = defineProps({
     type : String,
     default: ""
   },
+  btnId: {
+    type : String
+  },
+  iconId: {
+    type : String
+  },
 })
 let btnStyle = computed(() => {
-  console.log(props.size)
+  console.log(props.btnId)
   return "w-"+props.size+" h-"+props.size+" flex items-center justify-center " + props.btnCls
 })
 let iconStyle = computed(() => {
-  console.log(props.iconSize)
   return 'text-white w-'+props.iconSize+' h-'+props.iconSize+ " " + props.iconCls
 })
 </script>
