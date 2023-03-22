@@ -1,6 +1,6 @@
 <script setup>
 import moment from 'moment';
-import StartMenu from "./startMenu";
+import StartMenu from "./taskbar/startMenu";
 import WinBtn from "./winBtn";
 import {webStore} from "/stores/webStore.js";
 const store = webStore()

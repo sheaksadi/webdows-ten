@@ -1,6 +1,8 @@
 <script setup>
 import SrartMenuPowerbar from "./srartMenuPowerbar";
+import StartMenuAplications from "./startMenuAplications";
 import {webStore} from "/stores/webStore.js";
+
 const store = webStore()
 
 
@@ -20,7 +22,6 @@ onMounted(() => {
 const emit = defineEmits(['outClick'])
 
 function onMouseClick(e){
-  console.log("test!",e.target.closest(".start-menu-not-close"))
   if (!Boolean(e.target.closest(".start-menu-not-close")) && props.open){
     emit('outClick')
   }
@@ -36,6 +37,8 @@ function onMouseClick(e){
 
   >
   <SrartMenuPowerbar ></SrartMenuPowerbar>
+  <StartMenuAplications></StartMenuAplications>
+
   </div>
 </template>
 

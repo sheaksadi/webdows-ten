@@ -2,14 +2,20 @@
 import TaskBar from "./components/taskBar";
 import Window from "./components/window";
 import WinBtn from "./components/winBtn";
+// import Cv from "./components/windows/cv"
+import {createApp, defineAsyncComponent} from "vue"
+
+
 import {webStore} from "./stores/webStore.js";
 const store = webStore()
 
 
+//
+// let Cv = computed(() => {
+//   return import("./components/windows/cv")
+// })
+let Cv = defineAsyncComponent(() => import("./components/windows/window-cv"))
 
-let Cv = computed(() => {
-  return import("./components/windows/cv")
-})
 let mousePos = reactive({
   top: 110,
   left: 110,
@@ -17,18 +23,36 @@ let mousePos = reactive({
   draggable: ""
 })
 
-
+let app = createApp(Cv)
 
 const screen = ref(null)
+const winMount = ref(null)
+
+let moveAbleElements = []
 
 
 onMounted(() => {
+  console.log(app)
 
+
+
+  // const wrapper = window.document.createElement("div")
+  // app.mount(wrapper)
+  // screen.value.appendChild(wrapper)
+
+
+  store.Window = window
   store.screen = screen.value
-  console.log(screen.value)
-  for (let element of window.document.getElementsByClassName("header")){
-    mouseMoveHandler(element)
-  }
+  store.winMount = winMount.value
+  setInterval(()=>{
+    for (let element of window.document.getElementsByClassName("header")){
+      if (!moveAbleElements.includes(element)){
+        mouseMoveHandler(element)
+        moveAbleElements.push(element)
+
+      }
+    }
+  },500)
   store.isScreenMounted = true
 })
 
@@ -39,9 +63,9 @@ function mouseMoveHandler(element) {
   function mouseDown(e) {
     pos3 = e.clientX;
     pos4 = e.clientY;
-    screen.value.onmouseup = closeDragElement;
+    window.document.onmouseup = closeDragElement;
     // call a function whenever the cursor moves:
-    screen.value.onmousemove = elementDrag;
+    window.document.onmousemove = elementDrag;
   }
   function elementDrag(e) {
     // calculate the new cursor position:
@@ -58,22 +82,20 @@ function mouseMoveHandler(element) {
   }
   function closeDragElement() {
     // stop moving when mouse button is released:
-    screen.value.onmouseup = null;
-    screen.value.onmousemove = null;
+    window.document.onmouseup = null;
+    window.document.onmousemove = null;
   }
+
 }
-
-
 
 </script>
 
 <template>
   
-  <div class="h-screen w-full bg-transparent flex flex-col items-end" ref="screen" >
+  <div id="screen" class="h-screen w-full bg-transparent flex flex-col items-end" ref="screen" >
 
-
-    <div class=" h-full w-full">
-      <component :is="Cv"/>
+    <div ref="winMount" class=" h-full w-full">
+<!--      <component :is="Cv"/>-->
     </div>
 
   <TaskBar></TaskBar>

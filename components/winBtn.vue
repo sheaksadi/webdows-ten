@@ -29,7 +29,6 @@ const props = defineProps({
   },
 })
 let btnStyle = computed(() => {
-  console.log(props.btnId)
   return "w-"+props.size+" h-"+props.size+" flex items-center justify-center " + props.btnCls
 })
 let iconStyle = computed(() => {
