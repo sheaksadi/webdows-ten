@@ -40,9 +40,15 @@ export const webStore = defineStore('webStore', {
             console.log(vueApp)
             if (this.winMount) {
                 let element = this.Window.document.createElement("div")
+                // element.classList.add('w-full')
+                // element.classList.add('h-full')
+
                 vueApp.mount(element)
                 this.winMount.appendChild(element)
-                this.openedApps[uuid] = vueApp
+                this.openedApps[uuid] = {}
+                this.openedApps[uuid].instance = vueApp
+                this.openedApps[uuid].status = "open"
+                this.openedApps[uuid].app = app
             }
         },
         uuid() {

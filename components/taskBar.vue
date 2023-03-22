@@ -38,16 +38,22 @@ function atKeyPress(e){
   <div class="absolute bottom-10 left-0 ">
     <StartMenu v-if="store.isScreenMounted" :open="showStartMenu" @outClick="outClicked"></StartMenu>
   </div>
-  <div>
+  <div class="flex justify-start items-center">
 <!--    <button class="w-10 h-10 hover:bg-slate-800 group flex items-center justify-center">-->
 <!--      <Icon name="teenyicons:windows-solid" class="text-white group-hover:text-cyan-300  w-5 h-5 " ></Icon>-->
 <!--    </button>-->
 
 
-    <WinBtn  icon-size="5" size="10" btn-cls="hover:bg-slate-800 group start-menu-not-close" icon-cls="group-hover:text-cyan-300 start-menu-not-close"
+    <WinBtn  icon-size="5" size="10" btn-cls="hover:bg-slate-800 group start-menu-not-close px-2" icon-cls="group-hover:text-cyan-300 start-menu-not-close"
             icon-name="teenyicons:windows-solid"
             @click="()=>{showStartMenu = !showStartMenu}"
     ></WinBtn>
+    <div class="w-10 h-full relative group" v-for="(value, key) in store.openedApps" :key="key">
+      <div class="w-full h-[.20rem] absolute bottom-0 flex justify-center">
+        <div class="h-[.20rem] w-7 group-hover:w-full bg-cyan-300 transition-all duration-100 ease-linear"></div>
+      </div>
+      <WinBtn icon-size="5" size="10" :icon-name="value.app.icon" btn-cls="hover:bg-slate-800 " ></WinBtn>
+    </div>
 
   </div>
   <div class="flex flex-row">

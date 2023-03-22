@@ -31,7 +31,8 @@ let fullScreenIconSize = computed(() => {
   return fullScreen.value ? "4" : "3"
 })
 function closeApp() {
-  store.openedApps[props.uuid].unmount()
+  store.openedApps[props.uuid].instance.unmount()
+  delete store.openedApps[props.uuid];
 }
 
 </script>
