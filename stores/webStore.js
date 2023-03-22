@@ -6,6 +6,7 @@ export const webStore = defineStore('storeId', {
         return {
             // all these properties will have their type inferred automatically
             screen: null,
+            isScreenMounted: false,
 
         }
     },

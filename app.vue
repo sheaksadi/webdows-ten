@@ -6,6 +6,10 @@ import {webStore} from "./stores/webStore.js";
 const store = webStore()
 
 
+
+let Cv = computed(() => {
+  return import("./components/windows/cv")
+})
 let mousePos = reactive({
   top: 110,
   left: 110,
@@ -20,14 +24,15 @@ const screen = ref(null)
 
 onMounted(() => {
 
-  store.screen = screen
+  store.screen = screen.value
+  console.log(screen.value)
   for (let element of window.document.getElementsByClassName("header")){
     mouseMoveHandler(element)
   }
+  store.isScreenMounted = true
 })
 
 function mouseMoveHandler(element) {
-  console.log(element)
   let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   element.onmousedown = mouseDown
 
@@ -47,6 +52,9 @@ function mouseMoveHandler(element) {
     // set the element's new position:
     element.parentNode.style.top = (element.parentNode.offsetTop - pos2) + "px";
     element.parentNode.style.left = (element.parentNode.offsetLeft - pos1) + "px";
+
+
+    console.log(element.parentNode.getBoundingClientRect())
   }
   function closeDragElement() {
     // stop moving when mouse button is released:
@@ -56,18 +64,18 @@ function mouseMoveHandler(element) {
 }
 
 
+
 </script>
 
 <template>
   
-  <div class="h-screen w-full bg-transparent flex flex-col items-end" ref="screen">
+  <div class="h-screen w-full bg-transparent flex flex-col items-end" ref="screen" >
 
 
     <div class=" h-full w-full">
-      <Window icon="uil:github" title="Github">
-        bhgas
-      </Window>
+      <component :is="Cv"/>
     </div>
+
   <TaskBar></TaskBar>
   </div>
 </template>

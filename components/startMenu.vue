@@ -7,9 +7,9 @@ const store = webStore()
 let props = defineProps({
   open: Boolean,
 })
-let startMenu = ref(null)
 
 let setWidth = computed(() => {
+  console.log(props.open)
   return props.open ? "h-[36rem] " : "h-0"
 })
 
@@ -20,38 +20,20 @@ onMounted(() => {
 const emit = defineEmits(['outClick'])
 
 function onMouseClick(e){
-  let hasNotCloseClass = false
-  for (const cls of e.target.classList) {
-    if (cls === "start-menu-not-close"){
-      hasNotCloseClass = true
-    }
-  }
-  if (!hasNotCloseClass){
-    for (const cls of e.target.parentNode.classList) {
-      if (cls === "start-menu-not-close"){
-        hasNotCloseClass = true
-      }
-    }
-  }
-  if (e.target !== startMenu.value && !hasNotCloseClass  && props.open){
+  console.log("test!",e.target.closest(".start-menu-not-close"))
+  if (!Boolean(e.target.closest(".start-menu-not-close")) && props.open){
     emit('outClick')
   }
 }
 
-function closeDragElement() {
-  // stop moving when mouse button is released:
-  store.screen.onmousedown = null;
-  store.screen.onmouseup = null;
-
-}
 
 </script>
 
 
 <template>
-  <div class="w-[40rem]  bg-gray-800 flex flex-col transition-all duration-100 ease-linear backdrop-blur-2xl bg-opacity-90 "
+  <div class="w-[40rem]  bg-gray-800 flex flex-col transition-all duration-100 ease-linear backdrop-blur-2xl bg-opacity-90 start-menu-not-close"
        :class="setWidth"
-        ref="startMenu"
+
   >
   <SrartMenuPowerbar ></SrartMenuPowerbar>
   </div>

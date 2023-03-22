@@ -2,6 +2,8 @@
 import moment from 'moment';
 import StartMenu from "./startMenu";
 import WinBtn from "./winBtn";
+import {webStore} from "/stores/webStore.js";
+const store = webStore()
 
 
 
@@ -9,6 +11,9 @@ let time = ref(moment().format("LT"))
 let showStartMenu = ref(false)
 
 onMounted(() => {
+  window.document.onkeydown = atKeyPress
+
+
   setInterval(() => {
     time.value = moment().format("LT")
   },1000)
@@ -18,12 +23,20 @@ function outClicked(){
     showStartMenu.value = false
   }
 }
+
+
+function atKeyPress(e){
+  if (e.key === "OS"){
+    showStartMenu.value = !showStartMenu.value
+  }
+}
+
 </script>
 
 <template>
-<div class="w-full h-10 bg-gray-900 bg-opacity-90 z-10 flex justify-between items-center backdrop-blur-2xl" style="vertical-align: bottom">
+<div class="w-full h-10 bg-gray-900 bg-opacity-90 z-10 flex justify-between items-center backdrop-blur-2xl" style="vertical-align: bottom" >
   <div class="absolute bottom-10 left-0 ">
-    <StartMenu :open="showStartMenu" @outClick="outClicked"></StartMenu>
+    <StartMenu v-if="store.isScreenMounted" :open="showStartMenu" @outClick="outClicked"></StartMenu>
   </div>
   <div>
 <!--    <button class="w-10 h-10 hover:bg-slate-800 group flex items-center justify-center">-->
