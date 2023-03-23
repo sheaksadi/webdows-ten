@@ -2,25 +2,25 @@
   <div class="h-full w-12  flex flex-col group justify-between delay-300 transition-all duration-100 ease-linear
    overflow-hidden hover:shadow-xl drop-shadow-xl hover:bg-gray-700 absolute"
        :class="hoverClass"
-  @mouseover="()=>{ isMouseOver = true}" @mouseout="()=>{isMouseOver = false}"
+       @mouseover="()=>{ isMouseOver = true}" @mouseout="()=>{isMouseOver = false}"
   >
 
     <div>
       <button class="startMenuPowerBtn " @click="refuseHover">
-        <div class="w-12 h-12 flex justify-center items-center relative" >
+        <div class="w-12 h-12 flex justify-center items-center relative">
           <Icon class="w-6 h-6 text-white " name="system-uicons:menu-hamburger"></Icon>
-          <h1 class="text-white absolute left-12" >START</h1>
+          <h1 class="text-white absolute left-12">START</h1>
         </div>
 
 
       </button>
     </div>
-    <div class="" >
+    <div class="">
       <div v-for="btn in buttons">
         <button class="startMenuPowerBtn">
-          <div class="w-12 h-12 flex justify-center items-center relative" >
+          <div class="w-12 h-12 flex justify-center items-center relative">
             <Icon class="w-6 h-6 text-white " :name="btn.icon"></Icon>
-            <h1 class="text-white absolute left-12" >{{btn.name}}</h1>
+            <h1 class="text-white absolute left-12">{{ btn.name }}</h1>
           </div>
         </button>
       </div>
@@ -36,20 +36,20 @@ defineProps({
 let canHover = ref(true)
 
 let hoverClass = computed(() => {
-  if (canHover.value){
+  if (canHover.value) {
     return "hover:w-64"
   }
   return ""
 })
 
-function refuseHover () {
-  if (!canHover.value){
+function refuseHover() {
+  if (!canHover.value) {
     canHover.value = true
-  }else {
+  } else {
     canHover.value = false
-    setTimeout(()=>{
+    setTimeout(() => {
       canHover.value = true
-    },4000)
+    }, 4000)
   }
 
 }
@@ -77,13 +77,10 @@ let buttons = ref([
 )
 
 
-
-
-
 </script>
 
 <style scoped>
-.startMenuPowerBtn{
+.startMenuPowerBtn {
   @apply w-full h-12 hover:bg-slate-600 bg-opacity-70 ease-linear flex justify-start items-center
 }
 </style>

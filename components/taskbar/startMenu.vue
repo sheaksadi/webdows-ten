@@ -21,8 +21,8 @@ onMounted(() => {
 })
 const emit = defineEmits(['outClick'])
 
-function onMouseClick(e){
-  if (!Boolean(e.target.closest(".start-menu-not-close")) && props.open){
+function onMouseClick(e) {
+  if (!Boolean(e.target.closest(".start-menu-not-close")) && props.open) {
     emit('outClick')
   }
 }
@@ -32,16 +32,16 @@ function onMouseClick(e){
 
 
 <template>
-  <div class="w-[40rem]  bg-gray-800 flex flex-col transition-all duration-100 ease-linear backdrop-blur-2xl bg-opacity-90 start-menu-not-close"
-       :class="setWidth"
+  <div
+      class="w-[40rem]  bg-gray-800 flex flex-col transition-all duration-100 ease-linear backdrop-blur-2xl bg-opacity-90 start-menu-not-close"
+      :class="setWidth"
 
   >
-  <SrartMenuPowerbar ></SrartMenuPowerbar>
-  <StartMenuAplications></StartMenuAplications>
+    <SrartMenuPowerbar></SrartMenuPowerbar>
+    <StartMenuAplications></StartMenuAplications>
 
   </div>
 </template>
-
 
 
 <style scoped>

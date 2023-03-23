@@ -10,7 +10,7 @@ const props = defineProps({
   iconSize: String,
   iconName: String,
   size: {
-    type : String,
+    type: String,
     default: ""
   },
   btnCls: {
@@ -29,7 +29,7 @@ const props = defineProps({
   },
 })
 let btnStyle = computed(() => {
-  return "w-"+props.size+" h-"+props.size+" flex items-center justify-center " + props.btnCls
+  return "w-"+props.size+" h-"+props.size+" flex items-center justify-center no-drag " + props.btnCls
 })
 let iconStyle = computed(() => {
   return 'text-white w-'+props.iconSize+' h-'+props.iconSize+ " " + props.iconCls
