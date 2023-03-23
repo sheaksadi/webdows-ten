@@ -76,8 +76,10 @@ export const webStore = defineStore('webStore', {
                 e.preventDefault()
                 if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
                     that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
-                    pos3 = e.clientX;
+                    // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
+                    pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width) * 740;
                     pos4 = e.clientY;
+
                 }
                 // calculate the new cursor position:
                 pos1 = pos3 - e.clientX;
