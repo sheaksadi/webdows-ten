@@ -1,34 +1,3 @@
-<template>
-  <div class="h-full w-12  flex flex-col group justify-between delay-300 transition-all duration-100 ease-linear
-   overflow-hidden hover:shadow-xl drop-shadow-xl hover:bg-gray-700 absolute"
-       :class="hoverClass"
-       @mouseover="()=>{ isMouseOver = true}" @mouseout="()=>{isMouseOver = false}"
-  >
-
-    <div>
-      <button class="startMenuPowerBtn " @click="refuseHover">
-        <div class="w-12 h-12 flex justify-center items-center relative">
-          <Icon class="w-6 h-6 text-white " name="system-uicons:menu-hamburger"></Icon>
-          <h1 class="text-white absolute left-12">START</h1>
-        </div>
-
-
-      </button>
-    </div>
-    <div class="">
-      <div v-for="btn in buttons">
-        <button class="startMenuPowerBtn">
-          <div class="w-12 h-12 flex justify-center items-center relative">
-            <Icon class="w-6 h-6 text-white " :name="btn.icon"></Icon>
-            <h1 class="text-white absolute left-12">{{ btn.name }}</h1>
-          </div>
-        </button>
-      </div>
-
-    </div>
-  </div>
-</template>
-
 <script setup>
 defineProps({
   open: Boolean,
@@ -78,6 +47,39 @@ let buttons = ref([
 
 
 </script>
+
+
+<template>
+  <div class="h-full w-12  flex flex-col group justify-between delay-300 transition-all duration-100 ease-linear
+   overflow-hidden hover:shadow-xl drop-shadow-xl hover:bg-gray-700 absolute"
+       :class="hoverClass"
+       @mouseover="()=>{ isMouseOver = true}" @mouseout="()=>{isMouseOver = false}"
+  >
+
+    <div>
+      <button class="startMenuPowerBtn " @click="refuseHover">
+        <div class="w-12 h-12 flex justify-center items-center relative">
+          <Icon class="w-6 h-6 text-white " name="system-uicons:menu-hamburger"></Icon>
+          <h1 class="text-white absolute left-12">START</h1>
+        </div>
+
+
+      </button>
+    </div>
+    <div class="">
+      <div v-for="btn in buttons">
+        <button class="startMenuPowerBtn">
+          <div class="w-12 h-12 flex justify-center items-center relative">
+            <Icon class="w-6 h-6 text-white " :name="btn.icon"></Icon>
+            <h1 class="text-white absolute left-12">{{ btn.name }}</h1>
+          </div>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</template>
+
 
 <style scoped>
 .startMenuPowerBtn {

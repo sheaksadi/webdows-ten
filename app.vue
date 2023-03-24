@@ -7,7 +7,11 @@ import {createApp, defineAsyncComponent} from "vue"
 
 
 import {webStore} from "./stores/webStore.js";
-
+useHead({
+  titleTemplate: () => {
+    return 'Sheak Sadi';
+  }
+})
 const store = webStore()
 
 
@@ -33,7 +37,7 @@ const winMount = ref(null)
 
 
 onMounted(() => {
-  console.log(app)
+
 
 
   // const wrapper = window.document.createElement("div")
@@ -49,7 +53,7 @@ onMounted(() => {
       if (!store.moveAbleElements.includes(element)) {
         store.mouseMoveHandler(element)
         store.moveAbleElements.push(element)
-        // console.log(store.mouseDragging)
+
 
       }
     }
@@ -64,7 +68,7 @@ onMounted(() => {
 
 <template>
 
-  <div id="screen" class="h-screen w-full bg-transparent flex flex-col items-end absolute z-10" ref="screen">
+  <div id="screen" class="h-screen w-full bg-transparent flex flex-col items-end absolute z-10"  ref="screen">
 
     <div ref="winMount" class=" h-full w-full">
       <!--      <component :is="Cv"/>-->

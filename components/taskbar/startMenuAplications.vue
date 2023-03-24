@@ -13,7 +13,6 @@ let winStyle = computed(() => {
 })
 
 function openApp(name) {
-  console.log("1")
   store.openApp(name)
 }
 

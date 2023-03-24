@@ -5,9 +5,8 @@ import moment from "moment/moment";
 const props = defineProps({
   uuid: String,
 })
-onMounted(() => {
-  console.log("ajkgbfiseydg", props.uuid)
-})
+// onMounted(() => {
+// })
 </script>
 
 

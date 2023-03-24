@@ -19,6 +19,12 @@ let props = defineProps({
   // }
 })
 
+onMounted(() => {
+  window.value.style.top = (store.Window.innerHeight / 2 - window.value.getBoundingClientRect().height / 2) + "px";
+  window.value.style.left = (store.Window.innerWidth / 2 - window.value.getBoundingClientRect().width / 2) + "px";
+
+})
+
 let fullScreen = ref(false)
 let window = ref(null)
 
@@ -26,7 +32,7 @@ let window = ref(null)
 let winStyle = computed(() => {
   let cls = ""
 
-  console.log(window.value)
+
   if (store.openedApps[props.uuid].status === "minimized") {
     cls = cls + "scale-0 absolute"
     window.value.parentNode.classList.add('h-0')
@@ -35,27 +41,34 @@ let winStyle = computed(() => {
     if (window.value) {
       window.value.parentNode.classList.add('h-full')
       window.value.parentNode.classList.add('w-full')
-      // window.value.parentNode.classList.remove('h-0')
-      // window.value.parentNode.remove()
+
+
+      store.openedApps[props.uuid].top = window.value.style.top
+      store.openedApps[props.uuid].left = window.value.style.left
+
+      window.value.style.top = "0px";
+      window.value.style.left = "0px";
+
     }
 
-    cls = cls + "w-full h-full "
+    cls = cls + "w-full h-full relative "
+
+
   } else {
     if (window.value) {
       window.value.parentNode.classList.remove('h-full')
       window.value.parentNode.classList.remove('w-full')
-      // window.value.parentNode.classList.remove('h-0')
-      //
+
     }
 
-    cls = cls + "w-[52rem] h-[32rem] absolute "
+    cls = cls + " w-[60rem] h-[34rem] absolute "
   }
   if (store.selectedWindow === props.uuid) {
     cls = cls + " z-20"
   } else {
     cls = cls + "z-[0]"
   }
-  console.log(cls)
+
   if (store.mouseDragging && !store.openedApps[props.uuid].isFullscreen) {
     cls = cls + " noSelect"
   }
@@ -93,12 +106,29 @@ function atWindowClick() {
 function atMinimize() {
   store.openedApps[props.uuid].status = "minimized"
 }
+
+function atFullScreen() {
+  if (!store.openedApps[props.uuid].isFullscreen){
+    store.openedApps[props.uuid].minWidth = window.value.getBoundingClientRect().width
+  }
+  store.openedApps[props.uuid].isFullscreen = !store.openedApps[props.uuid].isFullscreen
+
+  if (!store.openedApps[props.uuid].isFullscreen){
+
+    console.log(store.openedApps[props.uuid].top)
+    window.value.style.top = store.openedApps[props.uuid].top;
+    window.value.style.left = store.openedApps[props.uuid].left;
+  }
+
+
+}
 </script>
 
 <template>
-  <div :data-uuid="uuid"  class="ring-1 ring-slate-500 flex flex-col " ref="window" :class="winStyle" @mousedown="atWindowClick">
+  <div :data-uuid="uuid" class="ring-1 ring-slate-500 flex flex-col  " ref="window" :class="winStyle"
+       @mousedown="atWindowClick" >
     <suspense>
-      <div class="w-full h-8 header flex items-center justify-between " :class="winHeaderStyle">
+      <div class="w-full h-8 header flex items-center justify-between " @dblclick="atFullScreen" :class="winHeaderStyle">
         <div class="flex items-center p-2 ">
           <Icon class="text-amber-500 w-6 h-6 mr-2" :name="icon"/>
           <h1 class="noSelect">{{ title }}</h1>
@@ -107,7 +137,7 @@ function atMinimize() {
 
           <WinBtn icon-name="bi:x-lg" icon-size="4" btnCls="hover:bg-red-600 w-12 h-8" @click="closeApp"></WinBtn>
           <WinBtn :icon-name="fullScreenIcon" :icon-size="fullScreenIconSize" btnCls="hover:bg-gray-600 w-12 h-8"
-                  @click="()=>{store.openedApps[props.uuid].isFullscreen = !store.openedApps[props.uuid].isFullscreen}"></WinBtn>
+                  @click="atFullScreen"></WinBtn>
           <WinBtn icon-name="bi:dash-lg" icon-size="4" btnCls="hover:bg-gray-600 w-12 h-8" @click="atMinimize"></WinBtn>
           <!--        <button class="winUtilBtn hover:bg-red-600 w-12 h-10 flex items-center justify-center"><Icon class="text-white w-4 h-4" name="bi:x-lg"></Icon></button>-->
           <!--        <button class="winUtilBtn hover:bg-gray-600 w-12 h-10 flex items-center justify-center"><Icon class="text-white w-3 h-3" name="bi:square"></Icon></button>-->

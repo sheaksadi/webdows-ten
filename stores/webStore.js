@@ -28,26 +28,31 @@ export const webStore = defineStore('webStore', {
         // since we rely on `this`, we cannot use an arrow function
         openApp(name) {
 
-            console.log(name)
+
             let app = null
             for (const a of this.apps) {
                 if (a.name === name) {
                     app = a
                 }
             }
-            console.log(app.name)
+
             let component = defineAsyncComponent(() => import(`../components/windows/window-${app.name}.vue`))
             let uuid = crypto.randomUUID()
             let vueApp = createApp(component, {uuid})
-            console.log("wm", this.winMount);
-            console.log(vueApp)
+
             if (this.winMount) {
                 let element = this.Window.document.createElement("div")
                 // element.classList.add('w-full')
                 // element.classList.add('h-full')
 
+
+
                 vueApp.mount(element)
                 this.winMount.appendChild(element)
+
+                console.log("ast",element);
+                console.log("ast",element.getBoundingClientRect().width);
+
                 this.openedApps[uuid] = {}
                 this.openedApps[uuid].instance = vueApp
                 this.openedApps[uuid].status = "open"
@@ -61,27 +66,65 @@ export const webStore = defineStore('webStore', {
             element.onmousedown = mouseDown
             let that = this
             function mouseDown(e) {
+                // element.parentNode.classList.remove('transition-all')
+                // element.parentNode.classList.remove('duration-100')
+                // element.parentNode.classList.remove('ease-linear')
+                console.log(element.parentNode.classList)
+                window.document.onmouseup = closeDragElement;
                 if (Boolean(e.target.closest(".no-drag"))) return
-                console.log(e.target)
                 that.mouseDragging = true
                 e.preventDefault()
                 pos3 = e.clientX;
                 pos4 = e.clientY;
-                window.document.onmouseup = closeDragElement;
+
                 // call a function whenever the cursor moves:
                 window.document.onmousemove = elementDrag;
+                console.log("srgrg",e.target.getBoundingClientRect().left)
+
             }
 
             function elementDrag(e) {
-                e.preventDefault()
+
+                // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
+                //     // console.log(e.target.getBoundingClientRect().width)
+                //     // console.log("''''''''''''")
+                //     return
+                // }
+                // element.parentNode.classList.remove('transition-all')
+                // element.parentNode.classList.remove('duration-100')
+                // element.parentNode.classList.remove('ease-linear')
+                // e.preventDefault()
+
                 if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
                     that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
+                    // console.log("pos 1", pos1)
+                    // console.log("pos 2", pos2)
+                    // console.log("pos 3", pos3)
+                    // console.log("pos 4", pos4)
                     // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
-                    pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width) * 740;
+                    pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width ) * 740;
                     pos4 = e.clientY;
 
+                    // console.log((e.clientX))
+                    // console.log(e.target.getBoundingClientRect().left)
+                    // console.log((e.clientX - e.target.getBoundingClientRect().left))
+                    // console.log(e.target.getBoundingClientRect().width)
+                    // console.log(that.openedApps[element.parentNode.dataset.uuid].minWidth)
+                    // console.log("''''''''''''")
+                    // console.log("pos 1", pos1)
+                    // console.log("pos 2", pos2)
+                    // console.log("pos 3", pos3)
+                    // console.log("pos 4", pos4)
+                    // element.parentNode.style.top = "400px";
+                    // element.parentNode.style.left = "400px";
+
+                }else {
+
                 }
+
+
                 // calculate the new cursor position:
+
                 pos1 = pos3 - e.clientX;
                 pos2 = pos4 - e.clientY;
                 pos3 = e.clientX;
@@ -89,7 +132,6 @@ export const webStore = defineStore('webStore', {
                 // set the element's new position:
                 element.parentNode.style.top = (element.parentNode.offsetTop - pos2) + "px";
                 element.parentNode.style.left = (element.parentNode.offsetLeft - pos1) + "px";
-
 
                 // console.log("parent", )
             }
@@ -100,6 +142,9 @@ export const webStore = defineStore('webStore', {
                     that.openedApps[element.parentNode.dataset.uuid].isFullscreen = true
                     element.parentNode.style.top = "0px"
                 }
+                // element.parentNode.classList.remove('transition-all')
+                // element.parentNode.classList.remove('duration-200')
+                // element.parentNode.classList.remove('ease-linear')
                 // stop moving when mouse button is released:
                 window.document.onmouseup = null;
                 window.document.onmousemove = null;
