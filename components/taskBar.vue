@@ -35,10 +35,45 @@ function atKeyPress(e) {
 function atOpenAppClick(app, uuid) {
   if (app.status === "minimized") {
     store.openedApps[uuid].status = "open"
+    store.selectedWindow = uuid
+  } else if (store.selectedWindow !== uuid){
+    store.selectedWindow = uuid
   } else if (app.status === "open") {
     store.openedApps[uuid].status = "minimized"
   }
 }
+
+// function appBtnStyle(value, key){
+//   let cls = "hover:bg-slate-800 "
+//
+//
+//   return cls
+// }
+
+let appBtnStyle = computed(() => {
+  let cls = {}
+  for (const [uuid, app] of Object.entries(store.openedApps)) {
+    if (store.selectedWindow === uuid && app.status !== "minimized"){
+      cls[uuid] = "hover:bg-slate-600 bg-slate-700 "
+    }else {
+      cls[uuid] = "hover:bg-slate-800  "
+    }
+  }
+
+  return cls
+})
+let appTickStyle = computed(() => {
+  let cls = {}
+  for (const [uuid, app] of Object.entries(store.openedApps)) {
+    if (store.selectedWindow === uuid && app.status !== "minimized"){
+      cls[uuid] = "w-full "
+    }else {
+      cls[uuid] = "w-7 group-hover:w-[2.3rem]  "
+    }
+  }
+
+  return cls
+})
 
 let openAppStyle = computed(() => {
   let cls = ""
@@ -50,6 +85,12 @@ let openAppStyle = computed(() => {
 
   return cls
 })
+
+function toDextop(){
+  for (const [key, value] of Object.entries(store.openedApps)) {
+    value.status = "minimized"
+  }
+}
 
 </script>
 
@@ -73,9 +114,9 @@ let openAppStyle = computed(() => {
       <div class="w-10 h-full relative group" @click="()=>{atOpenAppClick(value , key)}"
            v-for="(value, key) in store.openedApps" :key="key">
         <div class="w-full h-[.20rem] absolute bottom-0 flex justify-center">
-          <div class="h-[.20rem] w-7 group-hover:w-full bg-cyan-300 transition-all duration-100 ease-linear"></div>
+          <div class="h-[.20rem] bg-cyan-300 transition-all duration-100 ease-linear " :class="appTickStyle[key]"></div>
         </div>
-        <WinBtn icon-size="5" size="10" :icon-name="value.app.icon" btn-cls="hover:bg-slate-800 "></WinBtn>
+        <WinBtn icon-size="5" size="10" :icon-name="value.app.icon" :class="appBtnStyle[key]"></WinBtn>
 
       </div>
 
@@ -84,7 +125,7 @@ let openAppStyle = computed(() => {
       <div class="h-10 w-20 hover:bg-slate-800 text-white flex items-center justify-center">{{ time }}</div>
       <WinBtn icon-name="majesticons:comment-2-text-line" icon-size="6" size="10"
               btn-cls="hover:bg-slate-800 p-0"></WinBtn>
-      <div class="h-10 w-2 bg-gray-900 border-l-[1px] hover:bg-gray-800 border-white"></div>
+      <div class="h-10 w-2 bg-gray-900 border-l-[1px] hover:bg-gray-800 border-white" @click="toDextop"></div>
     </div>
 
   </div>

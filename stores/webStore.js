@@ -66,9 +66,9 @@ export const webStore = defineStore('webStore', {
             element.onmousedown = mouseDown
             let that = this
             function mouseDown(e) {
-                // element.parentNode.classList.remove('transition-all')
-                // element.parentNode.classList.remove('duration-100')
-                // element.parentNode.classList.remove('ease-linear')
+                element.parentNode.classList.remove('transition-all')
+                element.parentNode.classList.remove('duration-100')
+                element.parentNode.classList.remove('ease-linear')
                 console.log(element.parentNode.classList)
                 window.document.onmouseup = closeDragElement;
                 if (Boolean(e.target.closest(".no-drag"))) return
@@ -85,42 +85,42 @@ export const webStore = defineStore('webStore', {
 
             function elementDrag(e) {
 
-                // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
-                //     // console.log(e.target.getBoundingClientRect().width)
-                //     // console.log("''''''''''''")
-                //     return
-                // }
-                // element.parentNode.classList.remove('transition-all')
-                // element.parentNode.classList.remove('duration-100')
-                // element.parentNode.classList.remove('ease-linear')
-                // e.preventDefault()
-
                 if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
-                    that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
-                    // console.log("pos 1", pos1)
-                    // console.log("pos 2", pos2)
-                    // console.log("pos 3", pos3)
-                    // console.log("pos 4", pos4)
-                    // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
-                    pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width ) * 740;
-                    pos4 = e.clientY;
-
-                    // console.log((e.clientX))
-                    // console.log(e.target.getBoundingClientRect().left)
-                    // console.log((e.clientX - e.target.getBoundingClientRect().left))
                     // console.log(e.target.getBoundingClientRect().width)
-                    // console.log(that.openedApps[element.parentNode.dataset.uuid].minWidth)
                     // console.log("''''''''''''")
-                    // console.log("pos 1", pos1)
-                    // console.log("pos 2", pos2)
-                    // console.log("pos 3", pos3)
-                    // console.log("pos 4", pos4)
-                    // element.parentNode.style.top = "400px";
-                    // element.parentNode.style.left = "400px";
-
-                }else {
-
+                    return
                 }
+                element.parentNode.classList.remove('transition-all')
+                element.parentNode.classList.remove('duration-100')
+                element.parentNode.classList.remove('ease-linear')
+                e.preventDefault()
+
+                // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
+                //     that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
+                //     console.log("pos 1", pos1)
+                //     console.log("pos 2", pos2)
+                //     console.log("pos 3", pos3)
+                //     console.log("pos 4", pos4)
+                //     // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
+                //     pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / that.openedApps[element.parentNode.dataset.uuid].minWidth) * 740;
+                //     pos4 = e.clientY;
+                //
+                //     console.log((e.clientX))
+                //     console.log(e.target.getBoundingClientRect().left)
+                //     console.log((e.clientX - e.target.getBoundingClientRect().left))
+                //     console.log(e.target.getBoundingClientRect().width)
+                //     console.log(that.openedApps[element.parentNode.dataset.uuid].minWidth)
+                //     console.log("''''''''''''")
+                //     console.log("pos 1", pos1)
+                //     console.log("pos 2", pos2)
+                //     console.log("pos 3", pos3)
+                //     console.log("pos 4", pos4)
+                //     element.parentNode.style.top = "400px";
+                //     element.parentNode.style.left = "400px";
+                //
+                // }else {
+                //
+                // }
 
 
                 // calculate the new cursor position:
