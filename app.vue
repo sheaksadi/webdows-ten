@@ -7,6 +7,7 @@ import {createApp, defineAsyncComponent} from "vue"
 
 
 import {webStore} from "./stores/webStore.js";
+import WindowsAlert from "./components/windowsAlert";
 useHead({
   titleTemplate: () => {
     return 'Sheak Sadi';
@@ -44,7 +45,8 @@ onMounted(() => {
   // app.mount(wrapper)
   // screen.value.appendChild(wrapper)
 
-
+  store.isDeviceMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  console.log(store.isDeviceMobile)
   store.Window = window
   store.screen = screen.value
   store.winMount = winMount.value
@@ -68,10 +70,11 @@ onMounted(() => {
 
 <template>
 
-  <div id="screen" class="h-screen w-full bg-transparent flex flex-col items-end absolute z-10"  ref="screen">
+  <div id="screen" class="h-screen w-full bg-transparent flex flex-col items-end overflow-hidden "  ref="screen">
 
-    <div ref="winMount" class=" h-full w-full">
+    <div ref="winMount" class=" h-full w-full relative ">
       <!--      <component :is="Cv"/>-->
+      <WindowsAlert></WindowsAlert>
     </div>
 
     <TaskBar></TaskBar>

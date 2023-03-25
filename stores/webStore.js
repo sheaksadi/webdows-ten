@@ -6,6 +6,7 @@ export const webStore = defineStore('webStore', {
     state: () => {
         return {
             // all these properties will have their type inferred automatically
+            isDeviceMobile: false,
             screen: null,
             isScreenMounted: false,
             winMount: null,
@@ -42,8 +43,9 @@ export const webStore = defineStore('webStore', {
 
             if (this.winMount) {
                 let element = this.Window.document.createElement("div")
-                // element.classList.add('w-full')
-                // element.classList.add('h-full')
+                element.classList.add('absolute')
+                element.classList.add('top-0')
+                element.classList.add('left-0')
 
 
 

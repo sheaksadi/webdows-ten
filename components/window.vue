@@ -22,7 +22,9 @@ let props = defineProps({
 onMounted(() => {
   window.value.style.top = (store.Window.innerHeight / 2 - window.value.getBoundingClientRect().height / 2) + "px";
   window.value.style.left = (store.Window.innerWidth / 2 - window.value.getBoundingClientRect().width / 2) + "px";
-
+  if (store.isDeviceMobile){
+    store.openedApps[props.uuid].isFullscreen = true
+  }
 
 })
 
@@ -32,6 +34,7 @@ let window = ref(null)
 
 let winStyle = computed(() => {
   let cls = ""
+
 
 
   if (store.openedApps[props.uuid].status === "minimized") {
@@ -75,9 +78,9 @@ let winStyle = computed(() => {
     cls = cls + " w-[60rem] h-[34rem] absolute transition-all duration-100 ease-linear "
   }
   if (store.selectedWindow === props.uuid) {
-    cls = cls + " z-20"
+    cls = cls + " z-30"
   } else {
-    cls = cls + "z-[0]"
+    cls = cls + "z-20"
   }
 
   if (store.mouseDragging && !store.openedApps[props.uuid].isFullscreen) {
@@ -104,7 +107,11 @@ let fullScreenIconSize = computed(() => {
   return store.openedApps[props.uuid].isFullscreen ? "4" : "3"
 })
 
+
+
 function closeApp() {
+  console.log(window.value.parentNode.parentNode)
+  window.value.parentNode.parentNode.removeChild(window.value.parentNode)
   store.openedApps[props.uuid].instance.unmount()
   delete store.openedApps[props.uuid];
 }
@@ -119,6 +126,9 @@ function atMinimize() {
 }
 
 function atFullScreen() {
+  if (store.isDeviceMobile){
+    return
+  }
   if (!store.openedApps[props.uuid].isFullscreen){
     store.openedApps[props.uuid].minWidth = window.value.getBoundingClientRect().width
   }
