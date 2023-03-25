@@ -33,6 +33,7 @@ let app = createApp(Cv)
 
 const screen = ref(null)
 const winMount = ref(null)
+const open = ref(true)
 
 
 
@@ -74,7 +75,7 @@ onMounted(() => {
 
     <div ref="winMount" class=" h-full w-full relative ">
       <!--      <component :is="Cv"/>-->
-      <WindowsAlert></WindowsAlert>
+      <WindowsAlert v-if="store.isScreenMounted && open" @close="open = false"></WindowsAlert>
     </div>
 
     <TaskBar></TaskBar>

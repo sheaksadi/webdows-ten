@@ -20,8 +20,8 @@ let props = defineProps({
 })
 
 onMounted(() => {
-  window.value.style.top = (store.Window.innerHeight / 2 - window.value.getBoundingClientRect().height / 2) + "px";
-  window.value.style.left = (store.Window.innerWidth / 2 - window.value.getBoundingClientRect().width / 2) + "px";
+  appWindow.value.style.top = (store.Window.innerHeight / 2 - appWindow.value.getBoundingClientRect().height / 2) + "px";
+  appWindow.value.style.left = (store.Window.innerWidth / 2 - appWindow.value.getBoundingClientRect().width / 2) + "px";
   if (store.isDeviceMobile){
     store.openedApps[props.uuid].isFullscreen = true
   }
@@ -29,7 +29,7 @@ onMounted(() => {
 })
 
 let fullScreen = ref(false)
-let window = ref(null)
+let appWindow = ref(null)
 
 
 let winStyle = computed(() => {
@@ -39,24 +39,24 @@ let winStyle = computed(() => {
 
   if (store.openedApps[props.uuid].status === "minimized") {
     cls = cls + "scale-0 absolute w-[60rem] h-[34rem] "
-    window.value.parentNode.classList.add('h-0')
+    appWindow.value.parentNode.classList.add('h-0')
 
   } else if (store.openedApps[props.uuid].isFullscreen) {
-    if (window.value) {
-      window.value.parentNode.classList.add('h-full')
-      window.value.parentNode.classList.add('w-full')
+    if (appWindow.value) {
+      appWindow.value.parentNode.classList.add('h-full')
+      appWindow.value.parentNode.classList.add('w-full')
 
       console.log("1",store.openedApps[props.uuid].top);
-      console.log("1",window.value.style.top);
+      console.log("1",appWindow.value.style.top);
 
-      if (window.value.style.top !== "0px" && window.value.style.left !== "0px"){
-        store.openedApps[props.uuid].top = window.value.style.top
-        store.openedApps[props.uuid].left = window.value.style.left
+      if (appWindow.value.style.top !== "0px" && appWindow.value.style.left !== "0px"){
+        store.openedApps[props.uuid].top = appWindow.value.style.top
+        store.openedApps[props.uuid].left = appWindow.value.style.left
 
       }
 
-      window.value.style.top = "0px";
-      window.value.style.left = "0px";
+      appWindow.value.style.top = "0px";
+      appWindow.value.style.left = "0px";
 
     }
 
@@ -64,11 +64,11 @@ let winStyle = computed(() => {
 
 
   } else {
-    if (window.value) {
-      window.value.parentNode.classList.remove('h-full')
-      window.value.parentNode.classList.remove('w-full')
+    if (appWindow.value) {
+      appWindow.value.parentNode.classList.remove('h-full')
+      appWindow.value.parentNode.classList.remove('w-full')
       console.log("2",store.openedApps[props.uuid].top);
-      console.log("2",window.value.style.top);
+      console.log("2",appWindow.value.style.top);
       //
       // window.value.style.top = store.openedApps[props.uuid].top
       // window.value.style.left = store.openedApps[props.uuid].left
@@ -110,8 +110,8 @@ let fullScreenIconSize = computed(() => {
 
 
 function closeApp() {
-  console.log(window.value.parentNode.parentNode)
-  window.value.parentNode.parentNode.removeChild(window.value.parentNode)
+  console.log(appWindow.value.parentNode.parentNode)
+  appWindow.value.parentNode.parentNode.removeChild(appWindow.value.parentNode)
   store.openedApps[props.uuid].instance.unmount()
   delete store.openedApps[props.uuid];
 }
@@ -130,15 +130,15 @@ function atFullScreen() {
     return
   }
   if (!store.openedApps[props.uuid].isFullscreen){
-    store.openedApps[props.uuid].minWidth = window.value.getBoundingClientRect().width
+    store.openedApps[props.uuid].minWidth = appWindow.value.getBoundingClientRect().width
   }
   store.openedApps[props.uuid].isFullscreen = !store.openedApps[props.uuid].isFullscreen
 
   if (!store.openedApps[props.uuid].isFullscreen){
 
     console.log(store.openedApps[props.uuid].top)
-    window.value.style.top = store.openedApps[props.uuid].top;
-    window.value.style.left = store.openedApps[props.uuid].left;
+    appWindow.value.style.top = store.openedApps[props.uuid].top;
+    appWindow.value.style.left = store.openedApps[props.uuid].left;
   }
 
 
@@ -146,7 +146,7 @@ function atFullScreen() {
 </script>
 
 <template>
-  <div :data-uuid="uuid" class="ring-1 ring-slate-500 flex flex-col transition-all duration-100 ease-linear " ref="window" :class="winStyle"
+  <div :data-uuid="uuid" class="ring-1 ring-slate-500 flex flex-col transition-all duration-100 ease-linear  " ref="appWindow" :class="winStyle"
        @mousedown="atWindowClick" >
     <suspense>
       <div class="w-full h-8 header flex items-center justify-between " @dblclick="atFullScreen" :class="winHeaderStyle">
