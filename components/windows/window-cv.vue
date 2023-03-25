@@ -13,7 +13,7 @@ const props = defineProps({
 <template>
 
   <Window :uuid="uuid" title="CV" icon="mdi:file-document-outline" win-cls="h-10">
-    <div class="w-full h-full bg-blue-500">
+    <div class="w-full h-full bg-blue-500 p-2">
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias ex ipsum iure nobis, quasi qui quidem quis quod
       rerum sit. Ab blanditiis consectetur culpa debitis dicta doloribus est excepturi exercitationem fugit hic illo in,
       ipsum iusto minus molestias natus nostrum odio odit placeat praesentium qui quis quod, recusandae saepe sint

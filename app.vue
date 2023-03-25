@@ -77,8 +77,9 @@ onMounted(() => {
       <!--      <component :is="Cv"/>-->
       <WindowsAlert v-if="store.isScreenMounted && open" @close="open = false"></WindowsAlert>
     </div>
+    <div class="w-full h-10"></div>
 
-    <TaskBar></TaskBar>
+    <TaskBar class="fixed bottom-0"></TaskBar>
   </div>
 </template>
 <style>
