@@ -25,7 +25,7 @@ function openApp(name) {
        @mouseover="()=>{isMouseOver = true}" @mouseout="()=>{isMouseOver = false}"
 
   >
-    <div class="pt-1 pl-2 w-full h-full " v-for="app in store.apps" :key="app.name">
+    <div class="pt-1 pl-2 w-full h-10 " v-for="app in store.apps" :key="app.name">
       <button @click="() => {store.openApp(app.name)}"
               class="w-full h-10 hover:bg-slate-700 flex justify-start items-center text-white">
         <Icon :name="app.icon" class="w-6 h-6 m-2"></Icon>

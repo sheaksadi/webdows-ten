@@ -19,6 +19,11 @@ export const webStore = defineStore('webStore', {
                     name: "cv",
                     title: "Cv",
                     icon: "mdi:file-document-outline",
+                },
+                {
+                    name: "vsCode",
+                    title: "VS Code",
+                    icon: "vscode-icons:file-type-vscode",
                 }
             ],
             openedApps: {}

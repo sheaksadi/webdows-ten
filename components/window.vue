@@ -35,9 +35,9 @@ let appWindow = ref(null)
 let winStyle = computed(() => {
   let cls = ""
 
+  if (!store.openedApps[props.uuid]) return cls
 
-
-  if (store.openedApps[props.uuid].status === "minimized") {
+  if ( store.openedApps[props.uuid].status === "minimized") {
     cls = cls + "scale-0 absolute w-[60rem] h-[34rem] "
     appWindow.value.parentNode.classList.add('h-0')
 

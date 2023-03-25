@@ -91,12 +91,17 @@ function toDextop(){
     value.status = "minimized"
   }
 }
+let taskBarStyle = computed(() => {
+  return store.isDeviceMobile ? "fixed bottom-0" : ""
+})
 
 </script>
 
 <template>
-  <div class="w-full h-10 bg-gray-900 bg-opacity-90 z-50 flex justify-between items-center backdrop-blur-2xl"
-       style="vertical-align: bottom">
+  <div class="w-full h-10 bg-gray-900 bg-opacity-90 z-50 flex justify-between items-center backdrop-blur-2xl "
+       style="vertical-align: bottom"
+        :class="taskBarStyle"
+  >
     <div class="absolute bottom-10 left-0 ">
       <StartMenu v-if="store.isScreenMounted" :open="showStartMenu" @outClick="outClicked"></StartMenu>
     </div>

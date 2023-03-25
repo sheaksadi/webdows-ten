@@ -23,7 +23,6 @@ function startProgressbar(){
 
   let progressTime = setInterval(()=>{
     progress.value += increment_per_millisecond;
-    console.log(progress.value);
     if (progress.value > 100) progress.value = 100
     if (progress.value >= 100) {
       clearInterval(progressTime);
