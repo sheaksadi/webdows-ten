@@ -14,11 +14,17 @@ export const webStore = defineStore('webStore', {
             selectedWindow: "",
             mouseDragging: false,
             moveAbleElements: [],
+            vueExtensionWarning: false,
             apps: [
                 {
                     name: "cv",
                     title: "Cv",
                     icon: "mdi:file-document-outline",
+                },
+                {
+                    name: "contact",
+                    title: "Contact",
+                    icon: "ic:outline-email",
                 },
                 {
                     name: "vsCode",

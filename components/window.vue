@@ -168,9 +168,12 @@ function atFullScreen() {
 
       </div>
 
-    </suspense>
 
-    <div class="w-full h-full">
+
+
+
+    </suspense>
+    <div class="w-full h-full relative overflow-hidden">
       <slot></slot>
     </div>
 

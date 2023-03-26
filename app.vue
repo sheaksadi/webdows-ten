@@ -75,7 +75,13 @@ onMounted(() => {
 
     <div ref="winMount" class=" h-full w-full relative ">
       <!--      <component :is="Cv"/>-->
-      <WindowsAlert v-if="store.isScreenMounted && open" @close="open = false"></WindowsAlert>
+      <WindowsAlert v-if="store.isScreenMounted && store.isDeviceMobile &&  open" @close="open = false" icon="ic:twotone-system-security-update-warning" bar-time="30">
+        <div class="">
+          <h1 class="text-white">Better Website Experience on Computer</h1>
+          <h1 class="text-gray-300 text-sm">Due to size and power restrictions, most features do not work on mobile. For a better experience, please view the website on a computer.</h1>
+        </div>
+
+      </WindowsAlert>
     </div>
     <div v-if="store.isDeviceMobile" class="w-full h-10"></div>
 
