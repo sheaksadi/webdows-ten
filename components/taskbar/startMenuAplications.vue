@@ -11,9 +11,39 @@ let isMouseOver = ref(false)
 let winStyle = computed(() => {
   return isMouseOver.value ? "scrollbar-thumb-gray-600 scrollbar-track-gray-800 " : " scrollbar-track-transparent scrollbar-thumb-transparent"
 })
+const smallLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-function openApp(name) {
-  store.openApp(name)
+let orderedApps = computed(() => {
+  let apps = []
+  apps.push({title: "My Info", isHeader:true})
+  for (const app of store.apps) {
+    if (app.isAppAboutMe) {
+      apps.push(app)
+    }
+
+  }
+
+
+  for (const letter of smallLetters) {
+    for (const app of store.apps) {
+      if (app.name.startsWith(letter)) {
+        if (!apps.find(e => e.title === letter.toUpperCase())) {
+          apps.push({title: letter.toUpperCase(), isHeader:true})
+        }
+        apps.push(app)
+      }
+    }
+  }
+
+
+  return apps
+})
+
+function openApp(app) {
+  if (app.isHeader){
+    return
+  }
+  store.openApp(app.name)
 }
 
 </script>
@@ -25,11 +55,11 @@ function openApp(name) {
        @mouseover="()=>{isMouseOver = true}" @mouseout="()=>{isMouseOver = false}"
 
   >
-    <div class="pt-1 pl-2 w-full h-10 " v-for="app in store.apps" :key="app.name">
-      <button @click="() => {store.openApp(app.name)}"
+    <div class="pt-1 pl-2 w-full h-10 " v-for="app in orderedApps" :key="app.name">
+      <button @click="() => {openApp(app)}"
               class="w-full h-10 hover:bg-slate-700 flex justify-start items-center text-white">
-        <Icon :name="app.icon" class="w-6 h-6 m-2"></Icon>
-        {{ app.title }}
+        <Icon v-if="app.icon" :name="app.icon" class="w-6 h-6 ml-2"></Icon>
+        <h1 class="ml-2">{{ app.title }}</h1>
       </button>
     </div>
 

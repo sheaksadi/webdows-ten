@@ -21,7 +21,7 @@ function atAlertClose(){
   <Window icon="vscode-icons:file-type-vscode" title="VS Code" class="">
     <suspense>
       <WindowsAlert v-if="store.isScreenMounted && !store.vueExtensionWarning && alertOpen" @close="atAlertClose" icon="codicon:extensions">
-        <h1 class="text-white">Add vue extension for code highlighting</h1>
+        <h1 class="text-cyan-400">Add vue extension for code highlighting</h1>
       </WindowsAlert>
     </suspense>
 
