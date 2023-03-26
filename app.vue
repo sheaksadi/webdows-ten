@@ -65,7 +65,14 @@ onMounted(() => {
 })
 
 
-
+// $.ajax({
+//   type: 'GET',
+//   url: 'https://wakatime.com/share/@sheaksadi/ea566eee-e06b-421e-b58f-e5e51101e66d.json',
+//   dataType: 'jsonp',
+//   success: function(response) {
+//     console.log(response.data);
+//   },
+// });
 
 </script>
 

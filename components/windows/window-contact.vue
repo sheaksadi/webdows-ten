@@ -1,5 +1,9 @@
 <script setup>
 import Window from "../window";
+import {webStore} from "/stores/webStore.js";
+
+const store = webStore()
+
 
 let contacts = ref([
   {
@@ -55,8 +59,8 @@ function atBtnClick(contact){
             </button>
             <h1 class="text-white ml-2 text-xl">{{contact.siteUserName}}</h1>
 
-            <div class="absolute bg-cyan-400 left-[0rem] w-1.5 h-full  scale-0 group-hover:scale-100 transition-all group-hover:duration-300 scale-0 ;"></div>
-            <span class="sidebar-tooltip group-hover:scale-100">{{contact.name}}</span>
+            <div class="absolute bg-cyan-400 left-[0rem] w-1.5 h-0  group-hover:h-full transition-all group-hover:duration-300 ;"></div>
+            <span v-if="!store.isDeviceMobile" class="sidebar-tooltip group-hover:scale-100">{{contact.name}}</span>
           </div>
 
 
