@@ -3,6 +3,7 @@ import moment from 'moment';
 import StartMenu from "./taskbar/startMenu";
 import WinBtn from "./winBtn";
 import {webStore} from "/stores/webStore.js";
+import Calendar from "./taskbar/calendar";
 
 const store = webStore()
 
@@ -12,8 +13,6 @@ let showStartMenu = ref(false)
 
 onMounted(() => {
   window.document.onkeydown = atKeyPress
-
-
   setInterval(() => {
     time.value = moment().format("LT")
   }, 1000)
@@ -105,6 +104,9 @@ let taskBarStyle = computed(() => {
     <div class="absolute bottom-10 left-0 ">
       <StartMenu v-if="store.isScreenMounted" :open="showStartMenu" @outClick="outClicked"></StartMenu>
     </div>
+<!--    <div class="absolute bottom-10 right-0 ">-->
+<!--      <Calendar></Calendar>-->
+<!--    </div>-->
     <div class="flex justify-start items-center">
       <!--    <button class="w-10 h-10 hover:bg-slate-800 group flex items-center justify-center">-->
       <!--      <Icon name="teenyicons:windows-solid" class="text-white group-hover:text-cyan-300  w-5 h-5 " ></Icon>-->

@@ -59,7 +59,7 @@ function openApp(app) {
       <button @click="() => {openApp(app)}"
               class="w-full h-10 hover:bg-slate-700 flex justify-start items-center text-white">
         <Icon v-if="app.icon" :name="app.icon" class="w-6 h-6 ml-2"></Icon>
-        <h1 class="ml-2">{{ app.title }}</h1>
+        <h1 class="ml-2 ">{{ app.title }}</h1>
       </button>
     </div>
 

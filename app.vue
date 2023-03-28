@@ -20,7 +20,7 @@ const store = webStore()
 // let Cv = computed(() => {
 //   return import("./components/windows/cv")
 // })
-let Cv = defineAsyncComponent(() => import("./components/windows/window-cv"))
+let Cv = defineAsyncComponent(() => import("./components/windows/window-aboutMe"))
 
 let mousePos = reactive({
   top: 110,
@@ -47,7 +47,6 @@ onMounted(() => {
   // screen.value.appendChild(wrapper)
 
   store.isDeviceMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  console.log(store.isDeviceMobile)
   store.Window = window
   store.screen = screen.value
   store.winMount = winMount.value
@@ -56,8 +55,6 @@ onMounted(() => {
       if (!store.moveAbleElements.includes(element)) {
         store.mouseMoveHandler(element)
         store.moveAbleElements.push(element)
-
-
       }
     }
   }, 500)
@@ -74,6 +71,19 @@ onMounted(() => {
 //   },
 // });
 
+// let desktopApp =  ref([
+//   store.apps.find(app => app.name === "cv"),
+//   store.apps.find(app => app.name === "contact"),
+// ])
+function openApp(appName , dbClick) {
+  if (!store.isDeviceMobile && !dbClick) return
+  let app = store.apps.find(app => app.name === appName)
+  if (app) {
+    store.openApp(appName)
+  }
+}
+
+
 </script>
 
 <template>
@@ -81,6 +91,14 @@ onMounted(() => {
   <div id="screen" class="h-screen w-full bg-transparent flex flex-col items-end overflow-hidden "  ref="screen">
 
     <div ref="winMount" class=" h-full w-full relative ">
+      <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('aboutMe',false)}" @dblclick="()=>{openApp('aboutMe', true)}">
+        <img src="assets/icons/imageres_102.ico">
+        <h1 class="text-white shadow-black shadow-2xl noSelect">Sadi.txt</h1>
+      </div>
+      <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('contact',false)}" @dblclick="()=>{openApp('contact', true)}">
+        <Icon name="arcticons:documents" class="w-12 h-12 text-white"></Icon>
+        <h1 class="text-white shadow-black shadow-2xl noSelect">Contact.txt</h1>
+      </div>
       <!--      <component :is="Cv"/>-->
       <WindowsAlert v-if="store.isScreenMounted && store.isDeviceMobile &&  open" @close="open = false" icon="ic:twotone-system-security-update-warning" bar-time="30">
         <div class="">
@@ -96,7 +114,7 @@ onMounted(() => {
   </div>
 </template>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 body {
   overflow: hidden; /* Hide scrollbars */
@@ -104,8 +122,17 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 
-  font-family: 'Kanit', sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
 
 }
-
+.noSelect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                   supported by Chrome and Opera */
+}
 </style>

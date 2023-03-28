@@ -17,8 +17,8 @@ export const webStore = defineStore('webStore', {
             vueExtensionWarning: false,
             apps: [
                 {
-                    name: "cv",
-                    title: "Cv",
+                    name: "aboutMe",
+                    title: "About Me",
                     icon: "mdi:file-document-outline",
                     isAppAboutMe: true
                 },
@@ -33,7 +33,13 @@ export const webStore = defineStore('webStore', {
                     title: "VS Code",
                     icon: "vscode-icons:file-type-vscode",
                     isAppAboutMe: false
-                }
+                },
+                // {
+                //     name: "spotify",
+                //     title: "Spotify",
+                //     icon: "logos:spotify-icon",
+                //     isAppAboutMe: false
+                // }
             ],
             openedApps: {}
 
@@ -57,9 +63,7 @@ export const webStore = defineStore('webStore', {
 
             if (this.winMount) {
                 let element = this.Window.document.createElement("div")
-                element.classList.add('absolute')
-                element.classList.add('top-0')
-                element.classList.add('left-0')
+                element.classList.add('absolute', 'top-0', 'left-0');
 
 
 
@@ -82,9 +86,7 @@ export const webStore = defineStore('webStore', {
             element.onmousedown = mouseDown
             let that = this
             function mouseDown(e) {
-                element.parentNode.classList.remove('transition-all')
-                element.parentNode.classList.remove('duration-100')
-                element.parentNode.classList.remove('ease-linear')
+                element.parentNode.classList.remove('transition-all', 'duration-100', 'ease-linear');
                 console.log(element.parentNode.classList)
                 window.document.onmouseup = closeDragElement;
                 if (Boolean(e.target.closest(".no-drag"))) return
@@ -106,9 +108,7 @@ export const webStore = defineStore('webStore', {
                     // console.log("''''''''''''")
                     return
                 }
-                element.parentNode.classList.remove('transition-all')
-                element.parentNode.classList.remove('duration-100')
-                element.parentNode.classList.remove('ease-linear')
+                element.parentNode.classList.remove('transition-all', 'duration-100', 'ease-linear');
                 e.preventDefault()
 
                 // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {

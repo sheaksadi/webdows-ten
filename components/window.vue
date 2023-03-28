@@ -13,6 +13,15 @@ let props = defineProps({
     type: String,
     default: ""
   },
+  headerColor: {
+    type: String,
+    default: "bg-slate-700"
+  },
+  headerSelectColor: {
+    type: String,
+    default: "bg-slate-800"
+  },
+
   // fullScreen:{
   //   type: Boolean,
   //   default: true
@@ -32,59 +41,93 @@ let fullScreen = ref(false)
 let appWindow = ref(null)
 
 
-let winStyle = computed(() => {
-  let cls = ""
-
-  if (!store.openedApps[props.uuid]) return cls
-
-  if ( store.openedApps[props.uuid].status === "minimized") {
-    cls = cls + "scale-0 absolute w-[60rem] h-[34rem] "
-    appWindow.value.parentNode.classList.add('h-0')
-
-  } else if (store.openedApps[props.uuid].isFullscreen) {
-    if (appWindow.value) {
-      appWindow.value.parentNode.classList.add('h-full')
-      appWindow.value.parentNode.classList.add('w-full')
-
-      console.log("1",store.openedApps[props.uuid].top);
-      console.log("1",appWindow.value.style.top);
-
-      if (appWindow.value.style.top !== "0px" && appWindow.value.style.left !== "0px"){
-        store.openedApps[props.uuid].top = appWindow.value.style.top
-        store.openedApps[props.uuid].left = appWindow.value.style.left
-
-      }
-
-      appWindow.value.style.top = "0px";
-      appWindow.value.style.left = "0px";
-
-    }
-
-    cls = cls + "w-full h-full relative transition-all duration-100 ease-linear "
-
-
-  } else {
-    if (appWindow.value) {
-      appWindow.value.parentNode.classList.remove('h-full')
-      appWindow.value.parentNode.classList.remove('w-full')
-      console.log("2",store.openedApps[props.uuid].top);
-      console.log("2",appWindow.value.style.top);
-      //
-      // window.value.style.top = store.openedApps[props.uuid].top
-      // window.value.style.left = store.openedApps[props.uuid].left
-
-    }
-
-    cls = cls + " w-[60rem] h-[34rem] absolute transition-all duration-100 ease-linear "
+// let winStyle = computed(() => {
+//   let cls = ""
+//
+//   if (!store.openedApps[props.uuid]) return cls
+//
+//   if ( store.openedApps[props.uuid].status === "minimized") {
+//     cls = cls + "scale-0 absolute w-[60rem] h-[34rem] "
+//     appWindow.value.parentNode.classList.add('h-0')
+//
+//   } else if (store.openedApps[props.uuid].isFullscreen) {
+//     if (appWindow.value) {
+//       appWindow.value.parentNode.classList.add('h-full')
+//       appWindow.value.parentNode.classList.add('w-full')
+//
+//       console.log("1",store.openedApps[props.uuid].top);
+//       console.log("1",appWindow.value.style.top);
+//
+//       if (appWindow.value.style.top !== "0px" && appWindow.value.style.left !== "0px"){
+//         store.openedApps[props.uuid].top = appWindow.value.style.top
+//         store.openedApps[props.uuid].left = appWindow.value.style.left
+//
+//       }
+//
+//       appWindow.value.style.top = "0px";
+//       appWindow.value.style.left = "0px";
+//
+//     }
+//
+//     cls = cls + "w-full h-full relative transition-all duration-100 ease-linear "
+//
+//
+//   } else {
+//     if (appWindow.value) {
+//       appWindow.value.parentNode.classList.remove('h-full')
+//       appWindow.value.parentNode.classList.remove('w-full')
+//       console.log("2",store.openedApps[props.uuid].top);
+//       console.log("2",appWindow.value.style.top);
+//       //
+//       // window.value.style.top = store.openedApps[props.uuid].top
+//       // window.value.style.left = store.openedApps[props.uuid].left
+//
+//     }
+//
+//     cls = cls + " w-[60rem] h-[34rem] absolute transition-all duration-100 ease-linear "
+//   }
+//   if (store.selectedWindow === props.uuid) {
+//     cls = cls + " z-30"
+//   } else {
+//     cls = cls + "z-20"
+//   }
+//
+//   if (store.mouseDragging && !store.openedApps[props.uuid].isFullscreen) {
+//     cls = cls + " noSelect"
+//   }
+//
+//   return cls
+// })
+const winStyle = computed(() => {
+  if (!store.openedApps[props.uuid]) {
+    return ""
   }
-  if (store.selectedWindow === props.uuid) {
-    cls = cls + " z-30"
-  } else {
-    cls = cls + "z-20"
-  }
 
-  if (store.mouseDragging && !store.openedApps[props.uuid].isFullscreen) {
-    cls = cls + " noSelect"
+  const app = store.openedApps[props.uuid]
+  const isMinimized = app.status === "minimized"
+  const isFullscreen = app.isFullscreen
+  const isSelected = store.selectedWindow === props.uuid
+  const isDragging = store.mouseDragging && !isFullscreen
+
+  const cls = [
+    isMinimized && "scale-0 absolute w-[60rem] h-[34rem]",
+    isFullscreen && "w-full h-full relative transition-all duration-100 ease-linear",
+    isSelected && "z-30",
+    !isSelected && "z-20",
+    isDragging && "noSelect",
+    "absolute w-[60rem] h-[34rem] windowStyle transition-all duration-100 ease-linear",
+  ].filter(Boolean).join(" ")
+
+  if (isFullscreen && appWindow.value) {
+    appWindow.value.parentNode.classList.add("h-full", "w-full")
+    if (appWindow.value.style.top !== "0px" && appWindow.value.style.left !== "0px") {
+      app.top = appWindow.value.style.top
+      app.left = appWindow.value.style.left
+    }
+    appWindow.value.style.top = "0px"
+    appWindow.value.style.left = "0px"
+  } else if (!isFullscreen && appWindow.value) {
+    appWindow.value.parentNode.classList.remove("h-full", "w-full")
   }
 
   return cls
@@ -93,9 +136,9 @@ let winStyle = computed(() => {
 let winHeaderStyle = computed(() => {
   let cls = ""
   if (store.selectedWindow === props.uuid) {
-    cls = cls + "bg-slate-800"
+    cls = cls + props.headerSelectColor
   } else {
-    cls = cls + "bg-slate-700"
+    cls = cls + props.headerColor
   }
 
   return cls
@@ -193,4 +236,7 @@ function atFullScreen() {
   /* Non-prefixed version, currently
                                    supported by Chrome and Opera */
 }
+/*.windowStyle{*/
+/*  transition: height 300ms linear, width 300ms linear ,top 300ms ,left 300ms;*/
+/*}*/
 </style>

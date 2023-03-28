@@ -3,6 +3,7 @@ defineProps({
   open: Boolean,
 })
 let canHover = ref(true)
+let showSHutDown = ref(false)
 
 let hoverClass = computed(() => {
   if (canHover.value) {
@@ -44,6 +45,11 @@ let buttons = ref([
       },
     ]
 )
+function atBtnClick(name){
+  if (name === "Power"){
+    showSHutDown.value = !showSHutDown.value
+  }
+}
 
 
 </script>
@@ -66,14 +72,22 @@ let buttons = ref([
 
       </button>
     </div>
-    <div class="">
-      <div v-for="btn in buttons">
-        <button class="startMenuPowerBtn">
+    <div class=" ">
+      <div v-for="btn in buttons" class="relative">
+        <button class="startMenuPowerBtn" @click="()=>{atBtnClick(btn.name)}">
           <div class="w-12 h-12 flex justify-center items-center relative">
             <Icon class="w-6 h-6 text-white " :name="btn.icon"></Icon>
             <h1 class="text-white absolute left-12">{{ btn.name }}</h1>
           </div>
         </button>
+        <div v-if="btn.name === 'Power' && showSHutDown" class="w-64  bg-gray-900  absolute z-40  shutDown" >
+          <button class="startMenuPowerBtn">
+            <div class="w-12 h-12 flex justify-center items-center relative">
+              <Icon class="w-6 h-6 text-white " name="bi:power"></Icon>
+              <h1 class="text-white absolute left-12 delay-500">ShutDown</h1>
+            </div>
+          </button>
+        </div>
       </div>
 
     </div>
@@ -84,5 +98,23 @@ let buttons = ref([
 <style scoped>
 .startMenuPowerBtn {
   @apply w-full h-12 hover:bg-slate-600 bg-opacity-70 ease-linear flex justify-start items-center
+}
+.shutDown{
+  animation: slide-up 300ms forwards;
+}
+
+@keyframes slide-up {
+  0% {
+    height: 0rem;
+    top: 0rem;
+  }
+  80%{
+    height: 0rem;
+    top: -3rem;
+  }
+  100%{
+    height: 3rem;
+    top: -3rem;
+  }
 }
 </style>
