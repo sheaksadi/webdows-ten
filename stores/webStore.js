@@ -88,7 +88,7 @@ export const webStore = defineStore('webStore', {
             element.onmousedown = mouseDown
             let that = this
             function mouseDown(e) {
-                element.parentNode.classList.remove('transition-all', 'duration-75', 'ease-linear');
+                element.parentNode.classList.remove('transition-all', 'duration-[50ms]', 'ease-linear');
                 window.document.onmouseup = closeDragElement;
                 if (Boolean(e.target.closest(".no-drag"))) return
                 that.mouseDragging = true
@@ -103,39 +103,35 @@ export const webStore = defineStore('webStore', {
             }
 
             function elementDrag(e) {
-
-                // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
-                //     // console.log(e.target.getBoundingClientRect().width)
-                //     console.log("''''''''''''")
-                //     return
-                // }
-                element.parentNode.classList.remove('transition-all', 'duration-75', 'ease-linear');
+                if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) return
+                element.parentNode.classList.remove('transition-all', 'duration-[50ms]', 'ease-linear');
                 e.preventDefault()
 
-                if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
-                    that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
-                    console.log("pos 1", pos1)
-                    console.log("pos 2", pos2)
-                    console.log("pos 3", pos3)
-                    console.log("pos 4", pos4)
-                    // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
-                    pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / that.openedApps[element.parentNode.dataset.uuid].minWidth) * 740;
-                    pos4 = e.clientY;
-
-                    console.log((e.clientX))
-                    console.log(e.target.getBoundingClientRect().left)
-                    console.log((e.clientX - e.target.getBoundingClientRect().left))
-                    console.log(e.target.getBoundingClientRect().width)
-                    console.log(that.openedApps[element.parentNode.dataset.uuid].minWidth)
-                    console.log("''''''''''''")
-                    console.log("pos 1", pos1)
-                    console.log("pos 2", pos2)
-                    console.log("pos 3", pos3)
-                    console.log("pos 4", pos4)
-
-                }else {
-
-                }
+                // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
+                //     that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
+                //     console.log("pos 1", pos1)
+                //     console.log("pos 2", pos2)
+                //     console.log("pos 3", pos3)
+                //     console.log("pos 4", pos4)
+                //     // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
+                //     pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width) * 740 ;
+                //     pos4 = e.clientY;
+                //     // pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width) * 740;
+                //     // pos4 = e.clientY;
+                //     console.log((e.clientX))
+                //     console.log(e.target.getBoundingClientRect().left)
+                //     console.log((e.clientX - e.target.getBoundingClientRect().left))
+                //     console.log(e.target.getBoundingClientRect().width)
+                //     console.log(that.openedApps[element.parentNode.dataset.uuid].minWidth)
+                //     console.log("''''''''''''")
+                //     console.log("pos 1", pos1)
+                //     console.log("pos 2", pos2)
+                //     console.log("pos 3", pos3)
+                //     console.log("pos 4", pos4)
+                //
+                // }else {
+                //
+                // }
 
 
                 // calculate the new cursor position:
@@ -148,9 +144,9 @@ export const webStore = defineStore('webStore', {
 
                 element.parentNode.style.top = (element.parentNode.offsetTop - pos2) + "px";
                 element.parentNode.style.left = (element.parentNode.offsetLeft - pos1) + "px";
-
-                console.log("parent",pos3 )
-                console.log("parent",element.parentNode.offsetLeft - pos1 )
+                //
+                // console.log("parent",pos3 )
+                // console.log("parent",element.parentNode.offsetLeft - pos1 )
             }
 
             function closeDragElement() {

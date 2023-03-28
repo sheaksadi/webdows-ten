@@ -111,11 +111,11 @@ const winStyle = computed(() => {
 
   const cls = [
     isMinimized && "scale-0 absolute w-[60rem] h-[34rem]",
-    isFullscreen && "w-full h-full relative transition-all duration-75 ease-linear",
+    isFullscreen && "w-full h-full relative ",
     isSelected && "z-30",
     !isSelected && "z-20",
     isDragging && "noSelect",
-    "absolute w-[60rem] h-[34rem] windowStyle transition-all duration-75 ease-linear",
+    "absolute w-[60rem] h-[34rem] windowStyle ",
   ].filter(Boolean).join(" ")
 
   if (isFullscreen && appWindow.value) {
@@ -191,7 +191,7 @@ function atFullScreen() {
 </script>
 
 <template>
-  <div :data-uuid="uuid" class="ring-1 ring-slate-500 flex flex-col  " ref="appWindow" :class="winStyle"
+  <div :data-uuid="uuid" class="ring-1 ring-slate-500 flex flex-col transition-all duration-[50ms] ease-linear " ref="appWindow" :class="winStyle"
        @mousedown="atWindowClick" >
     <suspense>
       <div class="w-full h-8 header flex items-center justify-between " @dblclick="atFullScreen" :class="winHeaderStyle">
