@@ -63,7 +63,9 @@ export const webStore = defineStore('webStore', {
 
             if (this.winMount) {
                 let element = this.Window.document.createElement("div")
-                element.classList.add('absolute', 'top-0', 'left-0');
+                element.classList.add('h-full', 'w-full', 'absolute', 'top-0', 'left-0' );
+                element.style.width = "100%"
+                element.style.height = "100%"
 
 
 
@@ -86,8 +88,7 @@ export const webStore = defineStore('webStore', {
             element.onmousedown = mouseDown
             let that = this
             function mouseDown(e) {
-                element.parentNode.classList.remove('transition-all', 'duration-100', 'ease-linear');
-                console.log(element.parentNode.classList)
+                element.parentNode.classList.remove('transition-all', 'duration-75', 'ease-linear');
                 window.document.onmouseup = closeDragElement;
                 if (Boolean(e.target.closest(".no-drag"))) return
                 that.mouseDragging = true
@@ -103,40 +104,38 @@ export const webStore = defineStore('webStore', {
 
             function elementDrag(e) {
 
-                if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
-                    // console.log(e.target.getBoundingClientRect().width)
-                    // console.log("''''''''''''")
-                    return
-                }
-                element.parentNode.classList.remove('transition-all', 'duration-100', 'ease-linear');
+                // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
+                //     // console.log(e.target.getBoundingClientRect().width)
+                //     console.log("''''''''''''")
+                //     return
+                // }
+                element.parentNode.classList.remove('transition-all', 'duration-75', 'ease-linear');
                 e.preventDefault()
 
-                // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
-                //     that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
-                //     console.log("pos 1", pos1)
-                //     console.log("pos 2", pos2)
-                //     console.log("pos 3", pos3)
-                //     console.log("pos 4", pos4)
-                //     // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
-                //     pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / that.openedApps[element.parentNode.dataset.uuid].minWidth) * 740;
-                //     pos4 = e.clientY;
-                //
-                //     console.log((e.clientX))
-                //     console.log(e.target.getBoundingClientRect().left)
-                //     console.log((e.clientX - e.target.getBoundingClientRect().left))
-                //     console.log(e.target.getBoundingClientRect().width)
-                //     console.log(that.openedApps[element.parentNode.dataset.uuid].minWidth)
-                //     console.log("''''''''''''")
-                //     console.log("pos 1", pos1)
-                //     console.log("pos 2", pos2)
-                //     console.log("pos 3", pos3)
-                //     console.log("pos 4", pos4)
-                //     element.parentNode.style.top = "400px";
-                //     element.parentNode.style.left = "400px";
-                //
-                // }else {
-                //
-                // }
+                if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
+                    that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
+                    console.log("pos 1", pos1)
+                    console.log("pos 2", pos2)
+                    console.log("pos 3", pos3)
+                    console.log("pos 4", pos4)
+                    // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
+                    pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / that.openedApps[element.parentNode.dataset.uuid].minWidth) * 740;
+                    pos4 = e.clientY;
+
+                    console.log((e.clientX))
+                    console.log(e.target.getBoundingClientRect().left)
+                    console.log((e.clientX - e.target.getBoundingClientRect().left))
+                    console.log(e.target.getBoundingClientRect().width)
+                    console.log(that.openedApps[element.parentNode.dataset.uuid].minWidth)
+                    console.log("''''''''''''")
+                    console.log("pos 1", pos1)
+                    console.log("pos 2", pos2)
+                    console.log("pos 3", pos3)
+                    console.log("pos 4", pos4)
+
+                }else {
+
+                }
 
 
                 // calculate the new cursor position:
@@ -146,10 +145,12 @@ export const webStore = defineStore('webStore', {
                 pos3 = e.clientX;
                 pos4 = e.clientY;
                 // set the element's new position:
+
                 element.parentNode.style.top = (element.parentNode.offsetTop - pos2) + "px";
                 element.parentNode.style.left = (element.parentNode.offsetLeft - pos1) + "px";
 
-                // console.log("parent", )
+                console.log("parent",pos3 )
+                console.log("parent",element.parentNode.offsetLeft - pos1 )
             }
 
             function closeDragElement() {
@@ -157,6 +158,7 @@ export const webStore = defineStore('webStore', {
                 if (element.parentNode.offsetTop - pos2 < 0) {
                     that.openedApps[element.parentNode.dataset.uuid].isFullscreen = true
                     element.parentNode.style.top = "0px"
+                    that.openedApps[element.parentNode.dataset.uuid].minWidth = element.parentNode.getBoundingClientRect().width
                 }
                 // element.parentNode.classList.remove('transition-all')
                 // element.parentNode.classList.remove('duration-200')
