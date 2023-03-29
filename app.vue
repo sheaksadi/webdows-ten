@@ -92,12 +92,15 @@ function openApp(appName , dbClick) {
 
     <div ref="winMount" class=" h-full w-full relative ">
       <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('aboutMe',false)}" @dblclick="()=>{openApp('aboutMe', true)}">
-        <img  src="./assets/icons/imageres_102-2.png">
-        <h1 class="text-white shadow-black shadow-2xl noSelect">Sadi.txt</h1>
+<!--        <img  src="./assets/icons/imageres_102-2.png">-->
+        <Icon name="bxs:file-pdf" class="w-12 h-12 text-white"></Icon>
+
+        <h1 class="text-white text-sm shadow-black shadow-2xl noSelect">Sadi.pdf</h1>
       </div>
       <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('contact',false)}" @dblclick="()=>{openApp('contact', true)}">
-        <img  src="./assets/icons/imageres_102-2.png">
-        <h1 class="text-white shadow-black shadow-2xl noSelect">Contact.txt</h1>
+<!--        <img  src="./assets/icons/imageres_15-2.png">-->
+        <Icon name="ic:outline-email" class="w-12 h-12 text-white"></Icon>
+        <h1 class="text-white text-sm shadow-black shadow-2xl noSelect">Contact.exe</h1>
       </div>
       <!--      <component :is="Cv"/>-->
       <WindowsAlert v-if="store.isScreenMounted && store.isDeviceMobile &&  open" @close="open = false" icon="ic:twotone-system-security-update-warning" bar-time="30">

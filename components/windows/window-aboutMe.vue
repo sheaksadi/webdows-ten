@@ -17,7 +17,7 @@ let myCv = ref([
   {
     year: "2023 - Present",
     event: "University-Bachelors",
-    description: "In 2023, To fulfill my quest of becoming a super-duper-wizard, I started my journey as a student of Computer Science and Engineering. I mean, what could be more thrilling than spending countless hours staring at lines of code and debugging errors that seem to magically appear out of nowhere?",
+    description: "In 2023, To fulfill my quest of becoming a coding-wizard, I started my journey as a student of Computer Science and Engineering. I mean, what could be more thrilling than spending countless hours staring at lines of code and debugging errors that seem to magically appear out of nowhere?",
     title: "Studying Computer Science and Engineering",
 
   },
@@ -57,7 +57,7 @@ let myCv = ref([
       <!--      </div>-->
 
       <h2 class="pt-2 text-xl">Hi there, I'm Sheak Sadi</h2>
-      <p class="text-sm text-gray-400 pt-2">I'm an 18-year-old self-taught programmer, and now I'm studying Computer
+      <p class="text-sm text-gray-400 pt-2">I'm an {{myAge}}-year-old self-taught programmer, and now I'm studying Computer
         Science and Engineering to become a super-duper wizard.</p>
       <p class="text-sm text-gray-400 pt-2">My passion for programming began with Minecraft modding(Java), when I helped
         a friend out with plugins and mods for his server. Then I thought to myself, "Why stop at Minecraft? Let's
@@ -65,7 +65,7 @@ let myCv = ref([
       <p class="text-sm text-gray-400 pt-2">When I'm not coding, I enjoy swimming, playing badminton (even though I'm
         not very good), or I'll binge-watch some anime until my eyes turn into pixels.</p>
 
-      <h2 class="pt-2 text-xl mb-4">Here's my CV <span class="text-gray-400 text-sm">(yeah its not a lot)</span></h2>
+      <h2 class="pt-2 text-xl mb-4">Here's my CV</h2>
       <div class="w-full  mb-2 overflow-y-auto scrollbar-thin">
         <div class="p-2 " v-for="term in myCv">
           <h3 class="inline-block font-semibold text-xl">{{term.year}} - <span class=" text-sm">{{term.event}}</span></h3>
