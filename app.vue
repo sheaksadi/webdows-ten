@@ -91,14 +91,14 @@ function openApp(appName , dbClick) {
   <div id="screen" class="h-screen w-full bg-transparent flex flex-col items-end overflow-hidden "  ref="screen">
 
     <div ref="winMount" class=" h-full w-full relative ">
-<!--      <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('aboutMe',false)}" @dblclick="()=>{openApp('aboutMe', true)}">-->
-<!--        <img src="assets/icons/imageres_102.ico">-->
-<!--        <h1 class="text-white shadow-black shadow-2xl noSelect">Sadi.txt</h1>-->
-<!--      </div>-->
-<!--      <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('contact',false)}" @dblclick="()=>{openApp('contact', true)}">-->
-<!--        <Icon name="arcticons:documents" class="w-12 h-12 text-white"></Icon>-->
-<!--        <h1 class="text-white shadow-black shadow-2xl noSelect">Contact.txt</h1>-->
-<!--      </div>-->
+      <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('aboutMe',false)}" @dblclick="()=>{openApp('aboutMe', true)}">
+        <img  src="./assets/icons/imageres_102-2.png">
+        <h1 class="text-white shadow-black shadow-2xl noSelect">Sadi.txt</h1>
+      </div>
+      <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('contact',false)}" @dblclick="()=>{openApp('contact', true)}">
+        <img  src="./assets/icons/imageres_102-2.png">
+        <h1 class="text-white shadow-black shadow-2xl noSelect">Contact.txt</h1>
+      </div>
       <!--      <component :is="Cv"/>-->
       <WindowsAlert v-if="store.isScreenMounted && store.isDeviceMobile &&  open" @close="open = false" icon="ic:twotone-system-security-update-warning" bar-time="30">
         <div class="">

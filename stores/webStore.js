@@ -20,7 +20,8 @@ export const webStore = defineStore('webStore', {
                     name: "aboutMe",
                     title: "About Me",
                     icon: "mdi:file-document-outline",
-                    isAppAboutMe: true
+                    isAppAboutMe: true,
+                    imgPath: "/assets/icons/imageres_102-5.png"
                 },
                 {
                     name: "contact",

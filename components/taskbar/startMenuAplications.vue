@@ -58,6 +58,7 @@ function openApp(app) {
     <div class="pt-1 pl-2 w-full h-10 " v-for="app in orderedApps" :key="app.name">
       <button @click="() => {openApp(app)}"
               class="w-full h-10 hover:bg-slate-700 flex justify-start items-center text-white">
+<!--        <img v-if="app.imgPath" class="ml-2" :src="app.imgPath">-->
         <Icon v-if="app.icon" :name="app.icon" class="w-6 h-6 ml-2"></Icon>
         <h1 class="ml-2 ">{{ app.title }}</h1>
       </button>

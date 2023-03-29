@@ -119,7 +119,7 @@ const winStyle = computed(() => {
   ].filter(Boolean).join(" ")
 
   if (isFullscreen && appWindow.value) {
-    appWindow.value.parentNode.classList.add("h-full", "w-full")
+    appWindow.value.parentNode.classList.add("h-full", "w-full", 'absolute', 'top-0', 'left-0' )
     if (appWindow.value.style.top !== "0px" && appWindow.value.style.left !== "0px") {
       app.top = appWindow.value.style.top
       app.left = appWindow.value.style.left
@@ -127,9 +127,16 @@ const winStyle = computed(() => {
     appWindow.value.style.top = "0px"
     appWindow.value.style.left = "0px"
   } else if (!isFullscreen && appWindow.value) {
-    appWindow.value.parentNode.classList.remove("h-full", "w-full")
-  }
+    appWindow.value.parentNode.classList.remove('h-full', 'w-full', 'absolute', 'top-0', 'left-0' );
 
+    // appWindow.value.parentNode.classList.remove("h-full", "w-full")
+  }
+  if (isMinimized){
+    console.log(appWindow.value);
+    appWindow.value.parentNode.classList.remove('h-full', 'w-full', 'absolute', 'top-0', 'left-0' );
+  }else {
+    // appWindow.value.parentNode.classList.add('h-full', 'w-full', 'absolute', 'top-0', 'left-0' );
+  }
   return cls
 })
 

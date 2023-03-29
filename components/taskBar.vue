@@ -107,7 +107,7 @@ let taskBarStyle = computed(() => {
 <!--    <div class="absolute bottom-10 right-0 ">-->
 <!--      <Calendar></Calendar>-->
 <!--    </div>-->
-    <div class="flex justify-start items-center">
+    <div class="flex justify-start items-center overflow-hidden">
       <!--    <button class="w-10 h-10 hover:bg-slate-800 group flex items-center justify-center">-->
       <!--      <Icon name="teenyicons:windows-solid" class="text-white group-hover:text-cyan-300  w-5 h-5 " ></Icon>-->
       <!--    </button>-->
@@ -118,7 +118,7 @@ let taskBarStyle = computed(() => {
               icon-name="teenyicons:windows-solid"
               @click="()=>{showStartMenu = !showStartMenu}"
       ></WinBtn>
-      <div class="w-10 h-full relative group" @click="()=>{atOpenAppClick(value , key)}"
+      <div class="w-10 h-full relative group " @click="()=>{atOpenAppClick(value , key)}"
            v-for="(value, key) in store.openedApps" :key="key">
         <div class="w-full h-[.20rem] absolute bottom-0 flex justify-center">
           <div class="h-[.20rem] bg-cyan-300 transition-all duration-100 ease-linear " :class="appTickStyle[key]"></div>
