@@ -24,8 +24,12 @@ let setWidth = computed(() => {
 })
 
 function openApp(name) {
+  if (store.isDeviceMobile){
+    window.open("https://www.youtube.com/watch?v=o-YBDTqX_ZU&ab_channel=MusRest", "_blank")
+  }else {
+    store.openApp(name)
+  }
 
-  store.openApp(name)
 }
 
 const emit = defineEmits(['outClick','close'])
@@ -46,7 +50,7 @@ function onMouseClick(e) {
 
 <template>
   <div
-      class="h-screen w-[25rem] pt-10 bg-gray-900 bg-opacity-80 backdrop-blur-2xl px-4 notification-menu-not-close absolute bottom-10 z-40 "
+      class="md:h-screen h-[50rem] w-[20rem] md:w-[25rem] md:pt-10 bg-gray-900 bg-opacity-80 backdrop-blur-2xl px-4 notification-menu-not-close absolute bottom-10 z-40 "
       ref="notMenu"
        :class="setWidth"
   >
@@ -56,15 +60,15 @@ function onMouseClick(e) {
     <div class="w-full h-10 hover:bg-slate-800 flex justify-start items-center font-bold relative text-white select-none pl-2" @click="()=>{openApp('rickRoll')}">
       <Icon name="material-symbols:settings-outline-rounded" class="w-6 h-6 mr-2 text-white"></Icon>
       System
-      <WinBtn
-          icon-name="bi:x-lg"
-          icon-size="4"
-          icon-cls="text-gray-400 hover:text-white"
-          btnCls=" absolute top-0 bottom-0 right-2 w-4 h-10"
-      ></WinBtn>
+<!--      <WinBtn-->
+<!--          icon-name="bi:x-lg"-->
+<!--          icon-size="4"-->
+<!--          icon-cls="text-gray-400 hover:text-white"-->
+<!--          btnCls=" absolute top-0 bottom-0 right-2 w-4 h-10"-->
+<!--      ></WinBtn>-->
     </div>
     <div class="w-full  bg-slate-800 p-2" @click="()=>{openApp('rickRoll')}">
-      <h1 class="font-semibold text-white select-none">Too lazy to make fake notifications, so here's a cute cat pic instead!<span class="text-xs">(don't click it)</span></h1>
+      <h1 class="font-semibold text-white select-none">Too lazy to make fake notifications, so here's a cute cat pic instead!<span class="text-xs">(click at your own risk)</span></h1>
       <img class="w-full mt-2" :src="store.catPic[0].url" alt="ACat">
 
 
