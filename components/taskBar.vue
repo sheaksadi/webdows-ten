@@ -12,6 +12,7 @@ const store = webStore()
 
 let time = ref(moment().format("LT"))
 let showStartMenu = ref(false)
+let showCalendar = ref(false)
 let showNotificationMenu = ref(false)
 let isNotificationMenuOpen = ref(false)
 
@@ -25,6 +26,12 @@ onMounted(() => {
 function starMenuOutClicked() {
   if (showStartMenu.value) {
     showStartMenu.value = false
+  }
+}
+
+function calendarOutClicked() {
+  if (showCalendar.value) {
+    showCalendar.value = false
   }
 }
 
@@ -139,9 +146,9 @@ let taskBarStyle = computed(() => {
     <div class="absolute bottom-10 left-0 ">
       <StartMenu v-if="store.isScreenMounted" :open="showStartMenu" @outClick="starMenuOutClicked"></StartMenu>
     </div>
-<!--    <div class="absolute bottom-10 right-0 ">-->
-<!--      <Calendar></Calendar>-->
-<!--    </div>-->
+    <div class="absolute bottom-10 right-0 ">
+      <Calendar v-if="store.isScreenMounted" :open="showCalendar" @outClick="calendarOutClicked" ></Calendar>
+    </div>
 
       <Notifications v-if="store.isScreenMounted && isNotificationMenuOpen" :open="showNotificationMenu" @outClick="notificationOutClicked"></Notifications>
 
@@ -167,7 +174,10 @@ let taskBarStyle = computed(() => {
 
     </div>
     <div class="flex flex-row">
-      <div class="h-10 w-20 hover:bg-slate-800 text-white flex items-center justify-center">{{ time }}</div>
+      <div
+          class="h-10 w-20 hover:bg-slate-800 text-white flex items-center justify-center calender-not-close select-none cursor-default"
+          @click="()=>{showCalendar = !showCalendar}"
+      >{{ time }}</div>
       <WinBtn icon-name="majesticons:comment-2-text-line" icon-size="6" size="10"
               btn-cls="hover:bg-slate-800 p-0 notification-menu-not-close " @click="atNotificationClick" ></WinBtn>
       <div class="h-10 w-2 bg-gray-900 border-l-[1px] hover:bg-gray-800 border-white" @click="toDextop"></div>

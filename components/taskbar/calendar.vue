@@ -6,8 +6,8 @@ import {webStore} from "/stores/webStore";
 
 const store = webStore()
 
-let currentMonth = ref("feb")
-let year = ref("2022")
+let currentMonth = ref("mar")
+let year = ref("2023")
 let CalContainer = ref(null)
 
 
@@ -16,8 +16,13 @@ let CurrentDay = ref(moment().format("dddd") + ", " + moment().format("LL"))
 const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
 
-onMounted(() => {
+let props = defineProps({
+  open: Boolean,
+})
 
+
+onMounted(() => {
+  store.screen.onmousedown = onMouseClick
   setInterval(() => {
     currentTime.value = moment().format("LTS").split(" ")
     CurrentDay.value = moment().format("dddd") + ", " + moment().format("LL")
@@ -32,16 +37,19 @@ let fillDates = computed(() => {
   let startMonth = currentMonth.value === "jan" ? "dec" : months[months.indexOf(currentMonth.value) - 1]
   let endMonth = currentMonth.value === "dec" ? "jan" : months[months.indexOf(currentMonth.value) + 1]
   let startYear = currentMonth.value === "jan" ? year.value - 1 : year.value
-  let threeMonths = [startMonth, currentMonth.value, endMonth]
+  let threeMonths = [currentMonth.value]
 
-  let startingDay = moment().year(startYear).month(startMonth).startOf('month').format('dd')
+  let startingDay = moment().year(year.value).month(currentMonth.value).startOf('month').format('dd')
   let preDates = []
 
   for (let i = 0; i < daysOfWeek.indexOf(startingDay); i++) {
-    let endOfBeforeFirstMonth = moment().year(months.indexOf(startMonth) === 0 ? (startYear - 1) : startYear).month(months.indexOf(startMonth) === 0 ? "dec" : months[months.indexOf(startMonth) - 1]).endOf('month').format('D')
+    let endOfBeforeFirstMonth = moment().year(year.value).month(currentMonth.value).endOf('month').format('D')
     preDates.push({
       day: endOfBeforeFirstMonth - i,
-      date: `${months.indexOf(startMonth) === 0 ? 12 : months.indexOf(startMonth) + 1}/${endOfBeforeFirstMonth - i}/${months.indexOf(startMonth) === 0 ? (startYear - 1) : startYear}`
+      date: `${months.indexOf(startMonth) === 0 ? 12 : months.indexOf(startMonth) + 1}/${endOfBeforeFirstMonth - i}/${months.indexOf(startMonth) === 0 ? (startYear - 1) : startYear}`,
+
+      additionalDates: true,
+      style: "text-gray-600"
     })
   }
 
@@ -49,11 +57,34 @@ let fillDates = computed(() => {
 
   for (const month of threeMonths) {
     const endOfMonth = moment().year(months.indexOf(month) === 0 ? startYear : year.value).month(month).endOf('month').format('D')
-    const monthDates = Array.from({length: endOfMonth}, (_, i) => ({
+    const monthDates = Array.from({length: endOfMonth}, (_, i) => {
+      console.log(moment(`${months.indexOf(month) + 1}/${i + 1}/${year.value}`).format("DDMMYYY") === moment().format("DDMMYYY"))
+      console.log(moment().format("DDMMYYY"))
+      console.log(moment(`${months.indexOf(month) + 1}/${i + 1}/${year.value}`).format("DDMMYYY"))
+      let isDateToday = moment(`${months.indexOf(month) + 1}/${i + 1}/${year.value}`).format("DDMMYYY") === moment().format("DDMMYYY")
+      return ({
       day: i + 1,
-      date: `${months.indexOf(month) + 1}/${i + 1}/${months.indexOf(month) === 0 ? startYear : year.value}`
-    }))
+      date: `${months.indexOf(month) + 1}/${i + 1}/${year.value}`,
+      additionalDates: false,
+      style: isDateToday? "bg-cyan-400 text-white" : "text-white"
+
+    })
+
+    })
+
     dates.push(...monthDates)
+  }
+
+  let datesToAdd = 43 - dates.length
+  for (let i = 1; i < datesToAdd; i++) {
+
+    dates.push({
+      day: i ,
+      date: `${months.indexOf(currentMonth.value) === 11 ? 1 : (months.indexOf(currentMonth.value)  + 2)}/${i}/${months.indexOf(currentMonth.value) === 11 ? (parseInt( year.value) + 1) : year.value}`,
+      additionalDates: true,
+      style: "text-gray-600"
+    })
+
   }
 
   return dates
@@ -91,29 +122,51 @@ function scroll (delta){
   });
 }
 
+
+
+const emit = defineEmits(['outClick'])
+
+function onMouseClick(e) {
+  if (!Boolean(e.target.closest(".calender-not-close")) && props.open) {
+    emit('outClick')
+  }
+}
+
+let setHeight = computed(() => {
+  return props.open ? "h-[44rem] " : "h-0 scale-0"
+})
+
 </script>
 
 
 <template>
-  <div class="h-[44rem] w-[22.5rem] bg-cyan-500">
-    <div class="w-full h-28 bg-green-600 border-b-[1px] flex justify-start items-center pl-6">
+  <div class=" w-[22.5rem] bg-gray-900 bg-opacity-80 backdrop-blur-2xl calender-not-close transition-all duration-200" :class="setHeight">
+    <div class="w-full h-28 border-b-[1px] flex justify-start items-center pl-6">
       <div class="">
         <div class="flex items-end pb-2">
           <h1 class="text-white text-5xl font-extralight w-40 mr-2 cursor-default">{{ currentTime[0] }}</h1>
           <h1 class="text-gray-300 text-xl cursor-default">{{ currentTime[1] }}</h1>
         </div>
 
-        <h1 class="text-cyan-300 text-sm font-semibold w-40 cursor-pointer  ">{{ CurrentDay }}</h1>
+        <h1 class="text-cyan-300 text-sm font-semibold w-48 cursor-pointer  ">{{ CurrentDay }}</h1>
       </div>
 
     </div>
-    <div class="w-full h-96 bg-red-600 border-b-[1px]">
-      <div class="h-full bg-green-600">
-        <div class="flex ">
-          <div class="w-12 h-10" v-for="day in daysOfWeek">{{day}}</div>
+    <div class="w-full h-96  border-b-[1px]">
+
+      <div class="h-full ">
+        <div class="w-full h-16 px-6 flex items-center justify-between">
+          <div class=" text-white text-xl ">{{moment().format("MMMM YYYY")}}</div>
+          <div class="flex gap-2">
+            <Icon class="text-gray-400 hover:text-white w-8 h-8" name="material-symbols:keyboard-arrow-up-rounded"></Icon>
+            <Icon class="text-gray-400 hover:text-white w-8 h-8" name="material-symbols:keyboard-arrow-down-rounded"></Icon>
+          </div>
         </div>
-        <div class="flex bg-cyan-500 flex-wrap overflow-y-auto h-60 scrollbar-none snap-y transition-all duration-75 " ref="CalContainer" @wheel="atScroll">
-          <div class="w-12 h-10  snap-start" :id="date.date" v-for="date in fillDates">{{date.day}}</div>
+        <div class="flex items-center justify-center ">
+          <div class="w-12 h-10 flex items-center justify-center text-white" v-for="day in daysOfWeek">{{day}}</div>
+        </div>
+        <div class="flex  flex-wrap overflow-y-auto h-60 scrollbar-none snap-y transition-all duration-75 items-center justify-center" ref="CalContainer" >
+          <div class="w-12 h-12 snap-start flex items-center justify-center" :class="date.style"  :id="date.date" v-for="date in fillDates">{{date.day}}</div>
         </div>
 
 
