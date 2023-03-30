@@ -4,12 +4,16 @@ import StartMenu from "./taskbar/startMenu";
 import WinBtn from "./winBtn";
 import {webStore} from "/stores/webStore.js";
 import Calendar from "./taskbar/calendar";
+import Notifications from "./taskbar/notifications";
+import {useFetch} from "nuxt/app";
 
 const store = webStore()
 
 
 let time = ref(moment().format("LT"))
 let showStartMenu = ref(false)
+let showNotificationMenu = ref(false)
+let isNotificationMenuOpen = ref(false)
 
 onMounted(() => {
   window.document.onkeydown = atKeyPress
@@ -18,9 +22,40 @@ onMounted(() => {
   }, 1000)
 })
 
-function outClicked() {
+function starMenuOutClicked() {
   if (showStartMenu.value) {
     showStartMenu.value = false
+  }
+}
+
+
+function atNotificationClick() {
+  if (showNotificationMenu.value) {
+    showNotificationMenu.value = false
+    setTimeout(async ()=>{
+
+      if (!showNotificationMenu.value){
+        isNotificationMenuOpen.value = false
+        store.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
+      }
+    },500)
+  }else {
+    showNotificationMenu.value = true
+    isNotificationMenuOpen.value = true
+  }
+
+}
+
+
+async function notificationOutClicked() {
+  if (showNotificationMenu.value) {
+    showNotificationMenu.value = false
+    setTimeout(async ()=>{
+      if (!showNotificationMenu.value){
+        isNotificationMenuOpen.value = false
+        store.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
+      }
+    },500)
   }
 }
 
@@ -102,11 +137,14 @@ let taskBarStyle = computed(() => {
         :class="taskBarStyle"
   >
     <div class="absolute bottom-10 left-0 ">
-      <StartMenu v-if="store.isScreenMounted" :open="showStartMenu" @outClick="outClicked"></StartMenu>
+      <StartMenu v-if="store.isScreenMounted" :open="showStartMenu" @outClick="starMenuOutClicked"></StartMenu>
     </div>
 <!--    <div class="absolute bottom-10 right-0 ">-->
 <!--      <Calendar></Calendar>-->
 <!--    </div>-->
+
+      <Notifications v-if="store.isScreenMounted && isNotificationMenuOpen" :open="showNotificationMenu" @outClick="notificationOutClicked"></Notifications>
+
     <div class="flex justify-start items-center overflow-hidden">
       <!--    <button class="w-10 h-10 hover:bg-slate-800 group flex items-center justify-center">-->
       <!--      <Icon name="teenyicons:windows-solid" class="text-white group-hover:text-cyan-300  w-5 h-5 " ></Icon>-->
@@ -131,7 +169,7 @@ let taskBarStyle = computed(() => {
     <div class="flex flex-row">
       <div class="h-10 w-20 hover:bg-slate-800 text-white flex items-center justify-center">{{ time }}</div>
       <WinBtn icon-name="majesticons:comment-2-text-line" icon-size="6" size="10"
-              btn-cls="hover:bg-slate-800 p-0"></WinBtn>
+              btn-cls="hover:bg-slate-800 p-0 notification-menu-not-close " @click="atNotificationClick" ></WinBtn>
       <div class="h-10 w-2 bg-gray-900 border-l-[1px] hover:bg-gray-800 border-white" @click="toDextop"></div>
     </div>
 

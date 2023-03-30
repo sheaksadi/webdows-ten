@@ -39,7 +39,7 @@ let myCv = ref([
   {
     year: "2009 - 2020",
     event: "High School",
-    description: "High school. It was some of the best years of my life. I made some great friends, and I learned a lot about myself. I also learned a lot about the world around me.",
+    description: "High school. It was some of the best years of my life. I made some great friends, and discovered my love for procrastination, and learned that the mitochondria are the powerhouse of the cell - because that's come in handy, like, never.",
     title: "Studying Computer Science and Engineering",
 
   },
@@ -62,8 +62,8 @@ let myCv = ref([
       <p class="text-sm text-gray-400 pt-2">My passion for programming began with Minecraft modding(Java), when I helped
         a friend out with plugins and mods for his server. Then I thought to myself, "Why stop at Minecraft? Let's
         conquer the entire internet!" So, I dove headfirst into the wild and wonderful world of web development.</p>
-      <p class="text-sm text-gray-400 pt-2">When I'm not coding, I enjoy swimming, playing badminton (even though I'm
-        not very good), or I'll binge-watch some anime until my eyes turn into pixels.</p>
+      <p class="text-sm text-gray-400 pt-2">When I'm not coding, I enjoy swimming,  playing badminton (emphasis on the 'bad') ,
+        or I'll binge-watch some anime until my eyes turn into pixels.</p>
 
       <h2 class="pt-2 text-xl mb-4">Here's my CV</h2>
       <div class="w-full  mb-2 overflow-y-auto scrollbar-thin">

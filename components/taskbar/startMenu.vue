@@ -11,7 +11,6 @@ let props = defineProps({
 })
 
 let setWidth = computed(() => {
-  console.log(props.open)
   return props.open ? "h-[36rem] " : "h-0"
 })
 

@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 import {createApp, defineAsyncComponent} from "vue"
+import {useFetch} from "nuxt/app";
 
 export const webStore = defineStore('webStore', {
     // arrow function recommended for full type inference
@@ -15,6 +16,7 @@ export const webStore = defineStore('webStore', {
             mouseDragging: false,
             moveAbleElements: [],
             vueExtensionWarning: false,
+            catPic: "",
             apps: [
                 {
                     name: "aboutMe",
@@ -35,12 +37,14 @@ export const webStore = defineStore('webStore', {
                     icon: "vscode-icons:file-type-vscode",
                     isAppAboutMe: false
                 },
-                // {
-                //     name: "spotify",
-                //     title: "Spotify",
-                //     icon: "logos:spotify-icon",
-                //     isAppAboutMe: false
-                // }
+                {
+                    name: "rickRoll",
+                    title: "Rick Roll",
+                    icon: "mdi:warning",
+                    isAppAboutMe: false,
+                    invisible: true
+                },
+
             ],
             openedApps: {}
 
@@ -51,12 +55,8 @@ export const webStore = defineStore('webStore', {
         openApp(name) {
 
 
-            let app = null
-            for (const a of this.apps) {
-                if (a.name === name) {
-                    app = a
-                }
-            }
+            const app = this.apps.find((a) => a.name === name);
+            if (!app) return;
 
             let component = defineAsyncComponent(() => import(`../components/windows/window-${app.name}.vue`))
             let uuid = crypto.randomUUID()
@@ -76,11 +76,12 @@ export const webStore = defineStore('webStore', {
                 console.log("ast",element);
                 console.log("ast",element.getBoundingClientRect().width);
 
-                this.openedApps[uuid] = {}
-                this.openedApps[uuid].instance = vueApp
-                this.openedApps[uuid].status = "open"
-                this.openedApps[uuid].app = app
-                this.openedApps[uuid].isFullScreen = false
+                this.openedApps[uuid] = {
+                    instance: vueApp,
+                    status: "open",
+                    app,
+                    isFullScreen: false,
+                };
                 this.selectedWindow = uuid
             }
         },
@@ -108,32 +109,6 @@ export const webStore = defineStore('webStore', {
                 element.parentNode.classList.remove('transition-all', 'duration-[50ms]', 'ease-linear');
                 e.preventDefault()
 
-                // if (that.openedApps[element.parentNode.dataset.uuid].isFullscreen) {
-                //     that.openedApps[element.parentNode.dataset.uuid].isFullscreen = false
-                //     console.log("pos 1", pos1)
-                //     console.log("pos 2", pos2)
-                //     console.log("pos 3", pos3)
-                //     console.log("pos 4", pos4)
-                //     // let posPercent = (e.clientX - e.target.getBoundingClientRect().left / e.target.getBoundingClientRect().width) * 1000
-                //     pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width) * 740 ;
-                //     pos4 = e.clientY;
-                //     // pos3 = ((e.clientX - e.target.getBoundingClientRect().left) / e.target.getBoundingClientRect().width) * 740;
-                //     // pos4 = e.clientY;
-                //     console.log((e.clientX))
-                //     console.log(e.target.getBoundingClientRect().left)
-                //     console.log((e.clientX - e.target.getBoundingClientRect().left))
-                //     console.log(e.target.getBoundingClientRect().width)
-                //     console.log(that.openedApps[element.parentNode.dataset.uuid].minWidth)
-                //     console.log("''''''''''''")
-                //     console.log("pos 1", pos1)
-                //     console.log("pos 2", pos2)
-                //     console.log("pos 3", pos3)
-                //     console.log("pos 4", pos4)
-                //
-                // }else {
-                //
-                // }
-
 
                 // calculate the new cursor position:
 
@@ -145,9 +120,7 @@ export const webStore = defineStore('webStore', {
 
                 element.parentNode.style.top = (element.parentNode.offsetTop - pos2) + "px";
                 element.parentNode.style.left = (element.parentNode.offsetLeft - pos1) + "px";
-                //
-                // console.log("parent",pos3 )
-                // console.log("parent",element.parentNode.offsetLeft - pos1 )
+
             }
 
             function closeDragElement() {
@@ -157,19 +130,12 @@ export const webStore = defineStore('webStore', {
                     element.parentNode.style.top = "0px"
                     that.openedApps[element.parentNode.dataset.uuid].minWidth = element.parentNode.getBoundingClientRect().width
                 }
-                // element.parentNode.classList.remove('transition-all')
-                // element.parentNode.classList.remove('duration-200')
-                // element.parentNode.classList.remove('ease-linear')
-                // stop moving when mouse button is released:
+
                 window.document.onmouseup = null;
                 window.document.onmousemove = null;
             }
 
         }
-        // uuid() {
-        //     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-        //         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-        //     );
-        // }
+
     },
 })

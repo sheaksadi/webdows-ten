@@ -17,6 +17,9 @@ let orderedApps = computed(() => {
   let apps = []
   apps.push({title: "My Info", isHeader:true})
   for (const app of store.apps) {
+    if (app.invisible) {
+      continue
+    }
     if (app.isAppAboutMe) {
       apps.push(app)
     }
