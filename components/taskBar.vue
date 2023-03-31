@@ -23,54 +23,30 @@ onMounted(() => {
   }, 1000)
 })
 
-function starMenuOutClicked() {
-  console.log("out")
-  if (showStartMenu.value) {
-    showStartMenu.value = false
-  }
-}
 
-function calendarOutClicked() {
-  if (showCalendar.value) {
-    showCalendar.value = false
-  }
-}
+
 
 
 function atNotificationClick() {
-  if (showNotificationMenu.value) {
-    showNotificationMenu.value = false
+  if (store.showNotificationMenu) {
+    store.showNotificationMenu = false
     setTimeout(async ()=>{
 
-      if (!showNotificationMenu.value){
-        isNotificationMenuOpen.value = false
+      if (!store.showNotificationMenu){
+        store.isNotificationMenuOpen = false
         store.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
       }
     },500)
   }else {
-    showNotificationMenu.value = true
-    isNotificationMenuOpen.value = true
+    store.showNotificationMenu = true
+    store.isNotificationMenuOpen = true
   }
 
 }
-
-
-async function notificationOutClicked() {
-  if (showNotificationMenu.value) {
-    showNotificationMenu.value = false
-    setTimeout(async ()=>{
-      if (!showNotificationMenu.value){
-        isNotificationMenuOpen.value = false
-        store.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
-      }
-    },500)
-  }
-}
-
 
 function atKeyPress(e) {
   if (e.key === "OS") {
-    showStartMenu.value = !showStartMenu.value
+    store.showStartMenu = !store.showStartMenu
   }
 }
 
@@ -145,13 +121,13 @@ let taskBarStyle = computed(() => {
         :class="taskBarStyle"
   >
     <div class="absolute bottom-10 left-0 ">
-      <StartMenu v-if="store.isScreenMounted" :open="showStartMenu" @outClick="starMenuOutClicked"></StartMenu>
+      <StartMenu v-if="store.isScreenMounted" :open="store.showStartMenu" ></StartMenu>
     </div>
     <div class="absolute bottom-10 right-0 ">
-      <Calendar v-if="store.isScreenMounted" :open="showCalendar" @outClick="calendarOutClicked" ></Calendar>
+      <Calendar v-if="store.isScreenMounted" :open="store.showCalendar"  ></Calendar>
     </div>
 
-      <Notifications v-if="store.isScreenMounted && isNotificationMenuOpen" :open="showNotificationMenu" @outClick="notificationOutClicked"></Notifications>
+      <Notifications v-if="store.isScreenMounted && store.isNotificationMenuOpen" :open="store.showNotificationMenu" ></Notifications>
 
     <div class="flex justify-start items-center overflow-hidden">
       <!--    <button class="w-10 h-10 hover:bg-slate-800 group flex items-center justify-center">-->
@@ -162,7 +138,7 @@ let taskBarStyle = computed(() => {
       <WinBtn icon-size="5" size="10" btn-cls="hover:bg-slate-800 group start-menu-not-close px-2"
               icon-cls="group-hover:text-cyan-300 start-menu-not-close"
               icon-name="teenyicons:windows-solid"
-              @click="()=>{showStartMenu = !showStartMenu}"
+              @click="()=>{store.showStartMenu = !store.showStartMenu}"
       ></WinBtn>
       <div class="w-10 h-full relative group " @click="()=>{atOpenAppClick(value , key)}"
            v-for="(value, key) in store.openedApps" :key="key">
@@ -177,7 +153,7 @@ let taskBarStyle = computed(() => {
     <div class="flex flex-row">
       <div
           class="h-10 w-20 hover:bg-slate-800 text-white flex items-center justify-center calender-not-close select-none cursor-default"
-          @click="()=>{showCalendar = !showCalendar}"
+          @click="()=>{store.showCalendar = !store.showCalendar}"
       >{{ time }}</div>
       <WinBtn icon-name="majesticons:comment-2-text-line" icon-size="6" size="10"
               btn-cls="hover:bg-slate-800 p-0 notification-menu-not-close " @click="atNotificationClick" ></WinBtn>

@@ -17,6 +17,10 @@ export const webStore = defineStore('webStore', {
             moveAbleElements: [],
             vueExtensionWarning: false,
             catPic: "",
+            showStartMenu: false,
+            showCalendar: false,
+            showNotificationMenu: false,
+            isNotificationMenuOpen: false,
             apps: [
                 {
                     name: "aboutMe",
@@ -52,6 +56,38 @@ export const webStore = defineStore('webStore', {
     },
     actions: {
         // since we rely on `this`, we cannot use an arrow function
+
+        atScreenClick(e) {
+            console.log("click")
+            //notification menu
+            if (!Boolean(e.target.closest(".notification-menu-not-close")) && this.showNotificationMenu) {
+                if (this.showNotificationMenu) {
+                    this.showNotificationMenu = false
+                    setTimeout(async () => {
+                        if (!this.showNotificationMenu) {
+                            this.isNotificationMenuOpen = false
+                            this.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
+                        }
+                    }, 500)
+                }
+            }
+            //start menu
+            if (!Boolean(e.target.closest(".start-menu-not-close")) && this.showStartMenu) {
+                if (this.showStartMenu) {
+                    this.showStartMenu = false
+                }
+            }
+            //calendar
+            if (!Boolean(e.target.closest(".calender-not-close")) && this.showCalendar) {
+                if (this.showCalendar) {
+                    this.showCalendar = false
+                }
+            }
+
+
+        },
+
+
         openApp(name) {
 
 
@@ -64,17 +100,16 @@ export const webStore = defineStore('webStore', {
 
             if (this.winMount) {
                 let element = this.Window.document.createElement("div")
-                element.classList.add('h-full', 'w-full', 'absolute', 'top-0', 'left-0' );
+                element.classList.add('h-full', 'w-full', 'absolute', 'top-0', 'left-0');
                 element.style.width = "100%"
                 element.style.height = "100%"
-
 
 
                 vueApp.mount(element)
                 this.winMount.appendChild(element)
 
-                console.log("ast",element);
-                console.log("ast",element.getBoundingClientRect().width);
+                console.log("ast", element);
+                console.log("ast", element.getBoundingClientRect().width);
 
                 this.openedApps[uuid] = {
                     instance: vueApp,
@@ -89,6 +124,7 @@ export const webStore = defineStore('webStore', {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             element.onmousedown = mouseDown
             let that = this
+
             function mouseDown(e) {
                 element.parentNode.classList.remove('transition-all', 'duration-[50ms]', 'ease-linear');
                 window.document.onmouseup = closeDragElement;
@@ -100,7 +136,7 @@ export const webStore = defineStore('webStore', {
 
                 // call a function whenever the cursor moves:
                 window.document.onmousemove = elementDrag;
-                console.log("srgrg",e.target.getBoundingClientRect().left)
+                console.log("srgrg", e.target.getBoundingClientRect().left)
 
             }
 

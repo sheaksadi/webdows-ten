@@ -22,7 +22,9 @@ onMounted(async () => {
   store.Window = window;
   store.screen = screen.value;
   store.winMount = winMount.value;
+  window.document.onmousedown = store.atScreenClick;
   store.isScreenMounted = true;
+
   store.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
   setInterval(() => {
     for (let element of window.document.getElementsByClassName("header")) {

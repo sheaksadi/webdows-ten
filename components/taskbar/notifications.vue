@@ -6,10 +6,7 @@ const store = webStore();
 import {useFetch} from "nuxt/app";
 let { data: catPic } = await useFetch('https://api.thecatapi.com/v1/images/search')
 onMounted(() => {
-  store.screen.onmousedown = onMouseClick
-  // store.screen.onmouseup = closeDragElement
-  console.log(store.catPic)
-  console.log(catPic.value)
+
 })
 
 let props = defineProps({
@@ -37,10 +34,6 @@ const emit = defineEmits(['outClick','close'])
 function onMouseClick(e) {
   if (!Boolean(e.target.closest(".notification-menu-not-close")) && props.open) {
     emit('outClick')
-
-
-
-
   }
 }
 
