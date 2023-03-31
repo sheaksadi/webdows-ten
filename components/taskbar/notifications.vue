@@ -80,11 +80,11 @@ function onMouseClick(e) {
 
 <style scoped>
 .notificationSlideIn {
-  animation: notificationSlideIn 0.1s ease-in-out forwards;
+  animation: notificationSlideIn 0.2s ease-in-out forwards;
 }
 
 .notificationSlideOut {
-  animation: notificationSlideOut 0.1s ease-in-out forwards;
+  animation: notificationSlideOut 0.2s ease-in-out forwards;
 }
 
 @keyframes notificationSlideIn {

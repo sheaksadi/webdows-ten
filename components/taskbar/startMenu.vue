@@ -22,6 +22,7 @@ const emit = defineEmits(['outClick'])
 
 function onMouseClick(e) {
   if (!Boolean(e.target.closest(".start-menu-not-close")) && props.open) {
+    console.log("out")
     emit('outClick')
   }
 }

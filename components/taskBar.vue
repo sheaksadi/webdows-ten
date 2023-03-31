@@ -24,6 +24,7 @@ onMounted(() => {
 })
 
 function starMenuOutClicked() {
+  console.log("out")
   if (showStartMenu.value) {
     showStartMenu.value = false
   }

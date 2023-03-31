@@ -18,6 +18,7 @@ let orderedApps = computed(() => {
   apps.push({title: "My Info", isHeader:true})
   for (const app of store.apps) {
     if (app.invisible) {
+      console.log(app)
       continue
     }
     if (app.isAppAboutMe) {
@@ -29,6 +30,9 @@ let orderedApps = computed(() => {
 
   for (const letter of smallLetters) {
     for (const app of store.apps) {
+      if (app.invisible) {
+        continue
+      }
       if (app.name.startsWith(letter)) {
         if (!apps.find(e => e.title === letter.toUpperCase())) {
           apps.push({title: letter.toUpperCase(), isHeader:true})
