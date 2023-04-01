@@ -21,11 +21,12 @@ let setWidth = computed(() => {
 })
 
 function openApp(name) {
-  if (store.isDeviceMobile){
-    window.open("https://www.youtube.com/watch?v=o-YBDTqX_ZU&ab_channel=MusRest", "_blank")
-  }else {
-    store.openApp(name)
-  }
+  store.openApp(name)
+  // if (store.isDeviceMobile){
+  //   window.open("https://www.youtube.com/watch?v=o-YBDTqX_ZU&ab_channel=MusRest", "_blank")
+  // }else {
+  //
+  // }
 
 }
 
