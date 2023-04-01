@@ -17,9 +17,9 @@ function toYoutube() {
 
 </script>
 <template>
-  <Window icon="mdi:warning" title="LOL">
+  <Window icon="mdi:warning" title="Get loled in 4k">
     <div class="h-full w-full bg-black" @click="toYoutube">
-      <h1 class="absolute text-gray-400 hover:text-white cursor-default text-2xl top-2 left-4 ">Rick Astley - Never Gonna Give You Up (Remastered 4K 60fps,AI)</h1>
+<!--      <h1 class="absolute text-gray-400 hover:text-white cursor-default text-2xl top-2 left-4 ">Rick Astley - Never Gonna Give You Up (Remastered 4K 60fps,AI)</h1>-->
       <video ref="player" class="w-full h-full" loop>
         <source  src="../../assets/lol.mp4" type="video/mp4">
 
