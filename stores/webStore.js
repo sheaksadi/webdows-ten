@@ -30,6 +30,12 @@ export const webStore = defineStore('webStore', {
                     imgPath: "/assets/icons/imageres_102-5.png"
                 },
                 {
+                    name: "console",
+                    title: "Command Prompt",
+                    icon: "ph:terminal-fill",
+                    isAppAboutMe: false
+                },
+               {
                     name: "contact",
                     title: "Contact",
                     icon: "ic:outline-email",
@@ -50,7 +56,21 @@ export const webStore = defineStore('webStore', {
                 },
 
             ],
-            openedApps: {}
+            openedApps: {},
+            fileSystem: {
+                "C:": {
+                    "Users": {
+                        "SheakSadi": {
+                            children:{
+
+                            },
+                            type: "folder",
+                        },
+                        type: "folder",
+                    },
+                    type: "folder",
+                }
+            }
 
         }
     },
