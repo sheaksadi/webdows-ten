@@ -13,7 +13,10 @@ const getLick = computed(() => {
 <template>
   <Window icon="mdi:warning" title="LOL">
     <div class="h-full w-full bg-slate-900" >
-      <iframe class="h-full w-full" src="http://www.youtube.com/embed/o-YBDTqX_ZU?autoplay=1" ></iframe>
+      <iframe class="h-full w-full"
+              src="https://www.youtube.com/embed/o-YBDTqX_ZU">
+      </iframe>
+
     </div>
 
   </Window>
