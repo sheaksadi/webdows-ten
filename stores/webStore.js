@@ -58,18 +58,30 @@ export const webStore = defineStore('webStore', {
             ],
             openedApps: {},
             fileSystem: {
-                "C:": {
-                    "Users": {
-                        "SheakSadi": {
-                            children:{
+                children:{
+                    "C:": {
+                        children: {
+                            "Users": {
+                                children:{
+                                    "SheakSadi": {
+                                        children:{
+                                            "test.txt": {
+                                                content: "Hello World",
+                                                type: "file",
+                                            },
+                                        },
+                                        type: "folder",
+                                    },
+                                },
 
+                                type: "folder",
                             },
-                            type: "folder",
                         },
+
                         type: "folder",
-                    },
-                    type: "folder",
-                }
+                    }
+                },
+                type: "root",
             }
 
         }
