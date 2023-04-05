@@ -7,11 +7,11 @@ const store = webStore()
 
 
 let props = defineProps({
-  open: Boolean,
+    open: Boolean,
 })
 
 let setWidth = computed(() => {
-  return props.open ? "h-[36rem] " : "h-0"
+    return props.open ? "h-[36rem] " : "h-0"
 })
 
 onMounted(() => {
@@ -20,9 +20,9 @@ onMounted(() => {
 const emit = defineEmits(['outClick'])
 
 function onMouseClick(e) {
-  if (!Boolean(e.target.closest(".start-menu-not-close")) && props.open) {
-    emit('outClick')
-  }
+    if (!Boolean(e.target.closest(".start-menu-not-close")) && props.open) {
+        emit('outClick')
+    }
 }
 
 
@@ -30,15 +30,15 @@ function onMouseClick(e) {
 
 
 <template>
-  <div
-      class="w-[40rem]  bg-gray-800 flex flex-col transition-all duration-100 ease-linear backdrop-blur-2xl bg-opacity-90 start-menu-not-close"
-      :class="setWidth"
+    <div
+            class="w-[40rem]  bg-gray-800 flex flex-col transition-all duration-100 ease-linear backdrop-blur-2xl bg-opacity-90 start-menu-not-close"
+            :class="setWidth"
 
-  >
-    <SrartMenuPowerbar></SrartMenuPowerbar>
-    <StartMenuAplications></StartMenuAplications>
+    >
+        <SrartMenuPowerbar></SrartMenuPowerbar>
+        <StartMenuAplications></StartMenuAplications>
 
-  </div>
+    </div>
 </template>
 
 

@@ -1,6 +1,9 @@
 import {defineStore} from 'pinia'
 import {createApp, defineAsyncComponent} from "vue"
 import {useFetch} from "nuxt/app";
+import * as wakaTime from '../tools/wakatime.json';
+import axios from "axios";
+import moment from "moment";
 
 export const webStore = defineStore('webStore', {
     // arrow function recommended for full type inference
@@ -35,7 +38,7 @@ export const webStore = defineStore('webStore', {
                     icon: "ph:terminal-fill",
                     isAppAboutMe: false
                 },
-               {
+                {
                     name: "contact",
                     title: "Contact",
                     icon: "ic:outline-email",
@@ -54,17 +57,24 @@ export const webStore = defineStore('webStore', {
                     isAppAboutMe: false,
                     invisible: true
                 },
+                {
+                    name: "programming",
+                    title: "Programming",
+                    icon: "mdi:code-braces",
+                    isAppAboutMe: false,
+                    invisible: true
+                },
 
             ],
             openedApps: {},
             fileSystem: {
-                children:{
+                children: {
                     "C:": {
                         children: {
                             "Users": {
-                                children:{
+                                children: {
                                     "SheakSadi": {
-                                        children:{
+                                        children: {
                                             "test.txt": {
                                                 content: "Hello World",
                                                 type: "file",
@@ -118,10 +128,32 @@ export const webStore = defineStore('webStore', {
 
 
         },
+        async getWakaTimeData(stat, time) {
+            let {data} = await axios.post("/api/wakaTime", {url: wakaTime[stat][time]})
+            let values = {
+                date: [],
+                value: [],
+                total: 0
+            }
+            for (const obj of data.data) {
+                values.date.push(moment(obj["range"]["date"]).format("DD/MM/YYYY"))
+                let hours = parseFloat(obj["grand_total"].decimal)
+                let sec = parseFloat(obj["grand_total"]["total_seconds"])
+
+                values.value.push(hours)
+                values.total += sec
+            }
+            console.log(values.total)
+            values.total = values.total / 3600
+
+            console.log("dataa", data.data)
+
+            return values
+        },
 
 
         openApp(name) {
-
+            // console.log(useFetch("https://wakatime.com/share/@sheaksadi/b27ec288-7260-4e51-aa00-09f565cee249.json").then((res) => console.log(res.data)))
 
             const app = this.apps.find((a) => a.name === name);
             if (!app) return;
@@ -152,6 +184,7 @@ export const webStore = defineStore('webStore', {
                 this.selectedWindow = uuid
             }
         },
+
         mouseMoveHandler(element) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             element.onmousedown = mouseDown

@@ -49,6 +49,9 @@ function atBtnClick(name){
   if (name === "Power"){
     showSHutDown.value = !showSHutDown.value
   }
+  if (name === "Profile"){
+    window.open("https://github.com/sheaksadi", "_blank")
+  }
 }
 
 

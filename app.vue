@@ -1,11 +1,8 @@
 <script setup>
 import TaskBar from "./components/taskBar";
-import Window from "./components/window";
-import WinBtn from "./components/winBtn";
-import { webStore } from "./stores/webStore.js";
+import {webStore} from "./stores/webStore.js";
 import WindowsAlert from "./components/windowsAlert";
 import {useFetch} from "nuxt/app";
-
 
 
 useHead({
@@ -46,17 +43,17 @@ function openApp(appName, dbClick) {
 </script>
 
 <template>
-  <div id="screen" class="h-screen w-full bg-transparent flex flex-col items-end overflow-hidden" ref="screen">
+  <div id="screen" ref="screen" class="h-screen w-full bg-transparent flex flex-col items-end overflow-hidden">
     <div ref="winMount" class="h-full w-full relative">
       <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('aboutMe',false)}" @dblclick="()=>{openApp('aboutMe', true)}">
-        <Icon name="bxs:file-pdf" class="w-12 h-12 text-white"></Icon>
+        <Icon class="w-12 h-12 text-white" name="bxs:file-pdf"></Icon>
         <h1 class="text-white text-sm shadow-black shadow-2xl noSelect">Sadi.pdf</h1>
       </div>
       <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2" @click="()=>{openApp('contact',false)}" @dblclick="()=>{openApp('contact', true)}">
-        <Icon name="ic:outline-email" class="w-12 h-12 text-white"></Icon>
+        <Icon class="w-12 h-12 text-white" name="ic:outline-email"></Icon>
         <h1 class="text-white text-sm shadow-black shadow-2xl noSelect">Contact.exe</h1>
       </div>
-      <WindowsAlert v-if="store.isScreenMounted && store.isDeviceMobile && open" @close="open = false" icon="ic:twotone-system-security-update-warning" bar-time="30">
+      <WindowsAlert v-if="store.isScreenMounted && store.isDeviceMobile && open" bar-time="30" icon="ic:twotone-system-security-update-warning" @close="open = false">
         <div class="">
           <h1 class="text-white">Better Website Experience on Computer</h1>
           <h1 class="text-gray-300 text-sm">Due to size and power restrictions, most features do not work on mobile. For a better experience, please view the website on a computer.</h1>
@@ -82,7 +79,6 @@ body {
 .noSelect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
