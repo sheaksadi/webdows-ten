@@ -116,7 +116,7 @@ function atBtnClick(name){
                 </div>
             </button>
             <div class="bottom-[3rem] absolute  transition-all shutDown" v-if="showSHutDown">
-                <div  class="w-64  bg-gray-900   "  @click="()=>{store.systemPower = 'shutdown'}">
+                <div  class="w-64  bg-gray-900   "  @click="()=>{store.systemPower = 'shutdown'; showSHutDown = false; store.showStartMenu = false}">
                     <button class="startMenuPowerBtn" >
                         <div class="w-12 h-12 flex justify-center items-center relative">
                             <Icon class="w-6 h-6 text-white " name="bi:power"></Icon>
@@ -124,7 +124,7 @@ function atBtnClick(name){
                         </div>
                     </button>
                 </div>
-                <div  class="w-64  bg-gray-900   " @click="()=>{store.systemPower = 'restart'}" >
+                <div  class="w-64  bg-gray-900   " @click="()=>{store.systemPower = 'restart'; showSHutDown = false; store.showStartMenu = false}" >
                     <button class="startMenuPowerBtn">
                         <div class="w-12 h-12 flex justify-center items-center relative">
                             <Icon class="w-6 h-6 text-white " name="codicon:debug-restart"></Icon>
