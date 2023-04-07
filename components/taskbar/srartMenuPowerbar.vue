@@ -1,4 +1,9 @@
 <script setup>
+import {webStore} from "/stores/webStore.js";
+
+const store = webStore();
+
+
 defineProps({
   open: Boolean,
 })
@@ -76,22 +81,63 @@ function atBtnClick(name){
       </button>
     </div>
     <div class=" ">
-      <div v-for="btn in buttons" class="relative">
-        <button class="startMenuPowerBtn" @click="()=>{atBtnClick(btn.name)}">
-          <div class="w-12 h-12 flex justify-center items-center relative">
-            <Icon class="w-6 h-6 text-white " :name="btn.icon"></Icon>
-            <h1 class="text-white absolute left-12">{{ btn.name }}</h1>
-          </div>
-        </button>
-        <div v-if="btn.name === 'Power' && showSHutDown" class="w-64  bg-gray-900  absolute z-40  shutDown" >
-          <button class="startMenuPowerBtn">
-            <div class="w-12 h-12 flex justify-center items-center relative">
-              <Icon class="w-6 h-6 text-white " name="bi:power"></Icon>
-              <h1 class="text-white absolute left-12 delay-500">ShutDown</h1>
-            </div>
-          </button>
+        <div class="relative">
+            <button class="startMenuPowerBtn" @click="()=>{atBtnClick('Profile')}">
+                <div class="w-12 h-12 flex justify-center items-center relative">
+                    <Icon class="w-6 h-6 text-white " name="healthicons:ui-user-profile"></Icon>
+                    <h1 class="text-white absolute left-12">Profile</h1>
+                </div>
+            </button>
         </div>
-      </div>
+
+        <div class="relative">
+            <button class="startMenuPowerBtn" @click="()=>{atBtnClick('Settings')}">
+                <div class="w-12 h-12 flex justify-center items-center relative">
+                    <Icon class="w-6 h-6 text-white " name="material-symbols:settings-outline-rounded"></Icon>
+                    <h1 class="text-white absolute left-12">Settings</h1>
+                </div>
+            </button>
+        </div>
+
+        <div class="relative">
+            <button class="startMenuPowerBtn" @click="()=>{atBtnClick('Documents')}">
+                <div class="w-12 h-12 flex justify-center items-center relative">
+                    <Icon class="w-6 h-6 text-white " name="ion:document-outline"></Icon>
+                    <h1 class="text-white absolute left-12">Documents</h1>
+                </div>
+            </button>
+        </div>
+
+        <div class="">
+            <button class="startMenuPowerBtn relative z-20" @click="()=>{showSHutDown = !showSHutDown} ">
+                <div class="w-12 h-12 flex justify-center items-center relative ">
+                    <Icon class="w-6 h-6 text-white " name="bi:power"></Icon>
+                    <h1 class="text-white absolute left-12 z-40">Power</h1>
+                </div>
+            </button>
+            <div class="bottom-[3rem] absolute  transition-all shutDown" v-if="showSHutDown">
+                <div  class="w-64  bg-gray-900   "  @click="()=>{store.systemPower = 'shutdown'}">
+                    <button class="startMenuPowerBtn" >
+                        <div class="w-12 h-12 flex justify-center items-center relative">
+                            <Icon class="w-6 h-6 text-white " name="bi:power"></Icon>
+                            <h1 class="text-white absolute left-12 delay-500 z-10" >ShutDown</h1>
+                        </div>
+                    </button>
+                </div>
+                <div  class="w-64  bg-gray-900   " @click="()=>{store.systemPower = 'restart'}" >
+                    <button class="startMenuPowerBtn">
+                        <div class="w-12 h-12 flex justify-center items-center relative">
+                            <Icon class="w-6 h-6 text-white " name="codicon:debug-restart"></Icon>
+                            <h1 class="text-white absolute left-12 delay-500 z-10">Restart</h1>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+
+
 
     </div>
   </div>
@@ -103,21 +149,16 @@ function atBtnClick(name){
   @apply w-full h-12 hover:bg-slate-600 bg-opacity-70 ease-linear flex justify-start items-center
 }
 .shutDown{
-  animation: slide-up 300ms forwards;
+  animation: slide-up 400ms forwards;
 }
 
 @keyframes slide-up {
   0% {
-    height: 0rem;
-    top: 0rem;
-  }
-  80%{
-    height: 0rem;
-    top: -3rem;
+      height: 0rem;
+
   }
   100%{
-    height: 3rem;
-    top: -3rem;
+    height: 6rem;
   }
 }
 </style>

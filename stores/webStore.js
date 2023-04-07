@@ -24,6 +24,7 @@ export const webStore = defineStore('webStore', {
             showCalendar: false,
             showNotificationMenu: false,
             isNotificationMenuOpen: false,
+            systemPower: "on",
             apps: [
                 {
                     name: "aboutMe",
