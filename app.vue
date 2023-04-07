@@ -46,9 +46,9 @@ function openApp(appName, dbClick) {
 </script>
 
 <template>
-    <div id="screen" ref="screen" class="h-screen w-full bg-transparent  overflow-hidden">
+    <div id="screen" class="h-screen w-full bg-transparent  overflow-hidden">
 
-        <div class="w-full h-full flex flex-col items-end" v-if="store.systemPower === 'on'">
+        <div class="w-full h-full flex flex-col items-end" v-show="store.systemPower === 'on'"  ref="screen">
             <div ref="winMount" class="h-full w-full relative">
                 <div class="w-20 h-20 hover:bg-slate-500 hover:bg-opacity-40 flex justify-center items-center flex-col mt-2"
                      @click="()=>{openApp('aboutMe',false)}" @dblclick="()=>{openApp('aboutMe', true)}">
