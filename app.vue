@@ -26,6 +26,7 @@ onMounted(async () => {
     store.isScreenMounted = true;
 
     store.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
+    if (!store.isDeviceMobile) openApp('aboutMe', true)
     setInterval(() => {
         for (let element of window.document.getElementsByClassName("header")) {
             if (!store.moveAbleElements.includes(element)) {

@@ -57,7 +57,7 @@ function openApp(app) {
 
 
 <template>
-    <div class="w-[17rem] h-full ml-12  scrollbar overflow-y-scroll  delay-100 scrollbar-thin  "
+    <div class="w-[17rem] h-full ml-12 overflow-y-scroll  delay-100 scrollbar-thin  "
          :class="winStyle"
          @mouseover="()=>{isMouseOver = true}" @mouseout="()=>{isMouseOver = false}"
 

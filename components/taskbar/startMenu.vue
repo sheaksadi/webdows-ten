@@ -2,6 +2,7 @@
 import SrartMenuPowerbar from "./srartMenuPowerbar";
 import StartMenuAplications from "./startMenuAplications";
 import {webStore} from "/stores/webStore.js";
+import StartMenuGames from "~/components/taskbar/startMenuGames.vue";
 
 const store = webStore()
 
@@ -31,12 +32,13 @@ function onMouseClick(e) {
 
 <template>
     <div
-            class="w-[40rem]  bg-gray-800 flex flex-col transition-all duration-100 ease-linear backdrop-blur-2xl bg-opacity-90 start-menu-not-close"
+            class="w-[40rem]  bg-gray-800 flex flex-row transition-all duration-100 ease-linear backdrop-blur-2xl bg-opacity-90 start-menu-not-close"
             :class="setWidth"
 
     >
         <SrartMenuPowerbar></SrartMenuPowerbar>
         <StartMenuAplications></StartMenuAplications>
+        <StartMenuGames></StartMenuGames>
 
     </div>
 </template>

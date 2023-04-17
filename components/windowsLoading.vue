@@ -4,14 +4,14 @@
 
 <template>
 
-        <div class='loader'>
-            <div class="bg"></div>
-            <div class='circle'></div>
-            <div class='circle'></div>
-            <div class='circle'></div>
-            <div class='circle'></div>
-            <div class='circle'></div>
-        </div>
+    <div class='loader'>
+        <div class="bg"></div>
+        <div class='circle'></div>
+        <div class='circle'></div>
+        <div class='circle'></div>
+        <div class='circle'></div>
+        <div class='circle'></div>
+    </div>
 
 
 </template>
