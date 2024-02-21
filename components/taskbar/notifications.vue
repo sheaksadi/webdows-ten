@@ -43,33 +43,43 @@ function onMouseClick(e) {
 </script>
 
 <template>
-  <div
-      class="md:h-screen h-[50rem] w-[20rem] md:w-[25rem] md:pt-10 bg-gray-900 bg-opacity-80 backdrop-blur-2xl px-4 notification-menu-not-close absolute bottom-10 z-40 "
-      ref="notMenu"
-       :class="setWidth"
+  <transition
+      enter-active-class="transition duration-[300ms] ease-in-out "
+      enter-from-class="transform translate-x-full opacity-5"
+      enter-to-class="transform opacity-100"
+      leave-active-class="transition duration-[200ms] ease-in"
+      leave-to-class="transform translate-x-full opacity-5"
+
   >
-    <div class="w-full h-10 flex items-center justify-end ">
-      <a class="text-cyan-400 cursor-default hover:text-white select-none">manege notifications</a>
-    </div>
-    <div class="w-full h-10 hover:bg-slate-800 flex justify-start items-center font-bold relative text-white select-none pl-2" @click="()=>{openApp('rickRoll')}">
-      <Icon name="material-symbols:settings-outline-rounded" class="w-6 h-6 mr-2 text-white"></Icon>
-      System
-<!--      <WinBtn-->
-<!--          icon-name="bi:x-lg"-->
-<!--          icon-size="4"-->
-<!--          icon-cls="text-gray-400 hover:text-white"-->
-<!--          btnCls=" absolute top-0 bottom-0 right-2 w-4 h-10"-->
-<!--      ></WinBtn>-->
-    </div>
-    <div class="w-full  bg-slate-800 p-2" @click="()=>{openApp('rickRoll')}">
-      <h1 class="font-semibold text-white select-none">Too lazy to make fake notifications, so here's a cute cat pic instead!<span class="text-xs">(click at your own risk)</span></h1>
-      <img class="w-full mt-2" :src="store.catPic[0].url" alt="ACat">
+    <div
+        class="md:h-screen h-[50rem] w-[20rem] md:w-[25rem] md:pt-10 bg-gray-900 bg-opacity-80 backdrop-blur-2xl px-4 notification-menu-not-close absolute bottom-10 right-0 z-40 "
+        ref="notMenu"
+        v-show="props.open"
+    >
+      <div class="w-full h-10 flex items-center justify-end ">
+        <a class="text-cyan-400 cursor-default hover:text-white select-none">manege notifications</a>
+      </div>
+      <div class="w-full h-10 hover:bg-slate-800 flex justify-start items-center font-bold relative text-white select-none pl-2" @click="()=>{openApp('rickRoll')}">
+        <Icon name="material-symbols:settings-outline-rounded" class="w-6 h-6 mr-2 text-white"></Icon>
+        System
+        <!--      <WinBtn-->
+        <!--          icon-name="bi:x-lg"-->
+        <!--          icon-size="4"-->
+        <!--          icon-cls="text-gray-400 hover:text-white"-->
+        <!--          btnCls=" absolute top-0 bottom-0 right-2 w-4 h-10"-->
+        <!--      ></WinBtn>-->
+      </div>
+      <div class="w-full  bg-slate-800 p-2 z-0" @click="()=>{openApp('rickRoll')}">
+        <h1 class="font-semibold text-white select-none">Too lazy to make fake notifications, so here's a cute cat pic instead!<span class="text-xs">(click at your own risk)</span></h1>
+        <img class="w-full mt-2" :src="store.catPic" alt="ACat">
+
+
+      </div>
 
 
     </div>
+  </transition>
 
-
-  </div>
 </template>
 
 <style scoped>

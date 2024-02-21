@@ -24,8 +24,14 @@ onMounted(async () => {
     store.winMount = winMount.value;
     window.document.onmousedown = store.atScreenClick;
     store.isScreenMounted = true;
+    let cat = await useFetch('https://api.thecatapi.com/v1/images/search')
 
-    store.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
+    store.catPic = cat.data.value[0].url
+    await store.getCats()
+  console.log(store.catPicBuffer)
+
+    // store.catPicBuffer = await useFetch('https://api.thecatapi.com/v1/images/search').data
+
     if (!store.isDeviceMobile) openApp('aboutMe', true)
     setInterval(() => {
         for (let element of window.document.getElementsByClassName("header")) {

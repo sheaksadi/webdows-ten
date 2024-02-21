@@ -132,63 +132,78 @@ function onMouseClick(e) {
     }
 }
 
-let setHeight = computed(() => {
-    return props.open ? "h-[44rem] " : "h-0"
-})
-let setClockHeight = computed(() => {
-    return props.open ? "h-28 " : "h-0 scale-0"
-})
-let setCalendarHeight = computed(() => {
-    return props.open ? "  h-[25rem] " : "h-0 scale-0"
-})
+// let setHeight = computed(() => {
+//     return props.open ? "h-[44rem] " : "h-0"
+// })
+// let setClockHeight = computed(() => {
+//     return props.open ? "h-28 " : "h-0 scale-0"
+// })
+// let setCalendarHeight = computed(() => {
+//     return props.open ? "  h-[25rem] " : "h-0 scale-0"
+// })
 
 </script>
 
 
 <template>
-    <div class=" w-[22.5rem] bg-gray-900 bg-opacity-80 backdrop-blur-2xl calender-not-close transition-all duration-200"
-         :class="setHeight">
-        <div class="w-full  border-b-[1px] flex justify-start items-center pl-6 delay-75" :class="setClockHeight">
-            <div class="">
-                <div class="flex items-end pb-2">
-                    <h1 class="text-white text-5xl font-extralight w-40 mr-2 cursor-default">{{ currentTime[0] }}</h1>
-                    <h1 class="text-gray-300 text-xl cursor-default">{{ currentTime[1] }}</h1>
-                </div>
+  <transition name="slide-up"
+              enter-active-class="transition duration-[300ms] ease-out "
+              enter-from-class="transform translate-y-full opacity-5"
+              enter-to-class="transform opacity-100"
+              leave-active-class="transition duration-[200ms] ease-in"
+              leave-to-class="transform translate-y-full opacity-5"
 
-                <h1 class="text-cyan-300 text-sm font-semibold w-48 cursor-pointer  ">{{ CurrentDay }}</h1>
+  >
+    <div v-if="props.open"
+         class=" w-[22.5rem] bg-gray-900 bg-opacity-80
+                backdrop-blur-2xl calender-not-close transition-all duration-200 h-[44rem]
+                 z-[-100] absolute bottom-10 right-0"
+         style="z-index: -1"
+    >
+
+      <div class="w-full  border-b-[1px] flex justify-start items-center pl-6 delay-75 h-28 " :class="setClockHeight">
+        <div class="">
+          <div class="flex items-end pb-2">
+            <h1 class="text-white text-5xl font-extralight w-40 mr-2 cursor-default">{{ currentTime[0] }}</h1>
+            <h1 class="text-gray-300 text-xl cursor-default">{{ currentTime[1] }}</h1>
+          </div>
+
+          <h1 class="text-cyan-300 text-sm font-semibold w-48 cursor-pointer  ">{{ CurrentDay }}</h1>
+        </div>
+
+      </div>
+      <div class="w-full  border-b-[1px] delay-75  h-[25rem]" :class="setCalendarHeight">
+
+        <div class="h-full ">
+          <div class="w-full h-16 px-6 flex items-center justify-between">
+            <div class=" text-white text-xl ">{{ moment().format("MMMM YYYY") }}</div>
+            <div class="flex gap-2">
+              <Icon class="text-gray-400 hover:text-white w-8 h-8"
+                    name="material-symbols:keyboard-arrow-up-rounded"></Icon>
+              <Icon class="text-gray-400 hover:text-white w-8 h-8"
+                    name="material-symbols:keyboard-arrow-down-rounded"></Icon>
             </div>
+          </div>
+          <div class="flex items-center justify-center ">
+            <div class="w-12 h-10 flex items-center justify-center text-white" v-for="day in daysOfWeek">
+              {{ day }}
+            </div>
+          </div>
+          <div class="flex  flex-wrap  h-[17rem] scrollbar-none snap-y transition-all duration-75 items-center justify-center"
+               ref="CalContainer">
+            <div class="w-12 h-12 snap-start flex items-center justify-center" :class="date.style"
+                 :id="date.date" v-for="date in fillDates">{{ date.day }}
+            </div>
+          </div>
+
 
         </div>
-        <div class="w-full  border-b-[1px] delay-75" :class="setCalendarHeight">
 
-            <div class="h-full ">
-                <div class="w-full h-16 px-6 flex items-center justify-between">
-                    <div class=" text-white text-xl ">{{ moment().format("MMMM YYYY") }}</div>
-                    <div class="flex gap-2">
-                        <Icon class="text-gray-400 hover:text-white w-8 h-8"
-                              name="material-symbols:keyboard-arrow-up-rounded"></Icon>
-                        <Icon class="text-gray-400 hover:text-white w-8 h-8"
-                              name="material-symbols:keyboard-arrow-down-rounded"></Icon>
-                    </div>
-                </div>
-                <div class="flex items-center justify-center ">
-                    <div class="w-12 h-10 flex items-center justify-center text-white" v-for="day in daysOfWeek">
-                        {{ day }}
-                    </div>
-                </div>
-                <div class="flex  flex-wrap  h-[17rem] scrollbar-none snap-y transition-all duration-75 items-center justify-center"
-                     ref="CalContainer">
-                    <div class="w-12 h-12 snap-start flex items-center justify-center" :class="date.style"
-                         :id="date.date" v-for="date in fillDates">{{ date.day }}
-                    </div>
-                </div>
-
-
-            </div>
-
-        </div>
-        <div class="w-full  bg-green-600 "></div>
+      </div>
+      <div class="w-full  bg-green-600 "></div>
     </div>
+
+  </transition>
 </template>
 
 <style scoped>

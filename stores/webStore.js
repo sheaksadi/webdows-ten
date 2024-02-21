@@ -20,6 +20,7 @@ export const webStore = defineStore('webStore', {
             moveAbleElements: [],
             vueExtensionWarning: false,
             catPic: "",
+            catPicBuffer: [],
             showStartMenu: false,
             showCalendar: false,
             showNotificationMenu: false,
@@ -106,12 +107,7 @@ export const webStore = defineStore('webStore', {
             if (!Boolean(e.target.closest(".notification-menu-not-close")) && this.showNotificationMenu) {
                 if (this.showNotificationMenu) {
                     this.showNotificationMenu = false
-                    setTimeout(async () => {
-                        if (!this.showNotificationMenu) {
-                            this.isNotificationMenuOpen = false
-                            this.catPic = await useFetch('https://api.thecatapi.com/v1/images/search').data
-                        }
-                    }, 500)
+                    this.changeCatPic().then(r => {})
                 }
             }
             //start menu
@@ -154,8 +150,6 @@ export const webStore = defineStore('webStore', {
 
 
         openApp(name) {
-            // console.log(useFetch("https://wakatime.com/share/@sheaksadi/b27ec288-7260-4e51-aa00-09f565cee249.json").then((res) => console.log(res.data)))
-
             const app = this.apps.find((a) => a.name === name);
             if (!app) return;
 
@@ -173,8 +167,7 @@ export const webStore = defineStore('webStore', {
                 vueApp.mount(element)
                 this.winMount.appendChild(element)
 
-                console.log("ast", element);
-                console.log("ast", element.getBoundingClientRect().width);
+
 
                 this.openedApps[uuid] = {
                     instance: vueApp,
@@ -235,6 +228,20 @@ export const webStore = defineStore('webStore', {
 
                 window.document.onmouseup = null;
                 window.document.onmousemove = null;
+            }
+
+        },
+
+        async getCats() {
+            let cats = await useFetch('https://api.thecatapi.com/v1/images/search?limit=10')
+            cats.data.value.forEach((element) => {
+                this.catPicBuffer.push(element.url)
+            })
+        },
+        async changeCatPic() {
+            this.catPic = this.catPicBuffer.pop()
+            if (this.catPicBuffer.length < 5) {
+                await this.getCats()
             }
 
         }
