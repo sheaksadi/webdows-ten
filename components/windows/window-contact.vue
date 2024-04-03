@@ -14,6 +14,13 @@ let contacts = ref([
         siteUserName: "sheaksadi"
     },
     {
+        name: "LinkedIn",
+        icon: "mdi:linkedin",
+        link: "https://bd.linkedin.com/in/sheaksadi",
+        newWindow: true,
+        siteUserName: "sheaksadi"
+    },
+    {
         name: "Discord",
         icon: "ic:outline-discord",
         link: "https://discord.com/users/446224188592881665",
