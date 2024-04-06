@@ -16,7 +16,7 @@ let contacts = ref([
     {
         name: "LinkedIn",
         icon: "mdi:linkedin",
-        link: "https://bd.linkedin.com/in/sheaksadi",
+        link: "https://www.linkedin.com/in/sheaksadi/",
         newWindow: true,
         siteUserName: "sheaksadi"
     },
